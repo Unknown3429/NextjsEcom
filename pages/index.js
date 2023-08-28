@@ -1,114 +1,73 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div >
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <div className="main">
+        <Image className='mainImg'
+          width={0}
+          height={0}
+          sizes="100vw"
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+          style={{ width: '100%', height: '60vh', objectFit: "cover" }}
+          src={"/main3.jpg"} alt='main' />
+      </div>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <section className="text-gray-600 body-font ">
+        <div className="container px-5 py-16 mx-auto">
+          <div className="flex flex-wrap w-full mb-20">
+            <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
+              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Pick What You Want From Our Collection</h1>
+              <div className="h-1 w-20 bg-indigo-500 rounded"></div>
+            </div>
+          </div>
+          <div className="flex flex-wrap -m-4">
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://codeswear.nyc3.cdn.digitaloceanspaces.com/constants/landing/themes/anime.webp" alt="content" />
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Chichen Itza</h2>
+                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://codeswear.nyc3.cdn.digitaloceanspaces.com/constants/landing/themes/combooffers.webp" alt="content" />
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Colosseum Roma</h2>
+                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://codeswear.nyc3.cdn.digitaloceanspaces.com/constants/landing/themes/fitness.webp" alt="content" />
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Great Pyramid of Giza</h2>
+                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+            <div className="xl:w-1/4 md:w-1/2 p-4">
+              <div className="bg-gray-100 p-6 rounded-lg">
+                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://codeswear.nyc3.cdn.digitaloceanspaces.com/constants/landing/themes/trending.webp" alt="content" />
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">San Francisco</h2>
+                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-      `}</style>
+    
 
       <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
+      
       `}</style>
     </div>
   )
