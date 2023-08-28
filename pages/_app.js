@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { CartProvider } from "../context/cartContext"
+
+import LoadingBar from 'react-top-loading-bar'
 // import { useCartContext } from '../../context/cartContext';
 
 import "../styles/globals.css"
@@ -9,10 +11,14 @@ import { useRouter } from "next/router"
 
 const MyApp = ({ Component, pageProps }) => {
     const router = useRouter()
+    const [progress, setProgress] = useState(0)
     // const { addToCart } = useCartContext()
     const [cart, setCart] = useState({});
     const [subTotal, setSubTotal] = useState(0);
-    const [change, seChange] = useState()
+    const [change, setChange] = useState(0)
+    const [key, setKey] = useState(0)
+    const [user, setUser] = useState({ value: null });
+
 
     // for add item in cart 
     const addToCart = (itemCode, qty, price, name, size, variant) => {
@@ -25,7 +31,7 @@ const MyApp = ({ Component, pageProps }) => {
         }
         setCart(newCart);
         saveCart(newCart);
-        seChange(newCart)
+        setChange(Math.random())
     }
 
     // buy now button
@@ -50,7 +56,7 @@ const MyApp = ({ Component, pageProps }) => {
         }
         setCart(newCart);
         saveCart(newCart);
-        seChange(newCart)
+        setChange(Math.random())
     }
 
     const saveCart = (newCart) => {
@@ -72,8 +78,22 @@ const MyApp = ({ Component, pageProps }) => {
         saveCart({});
     }
 
+    // for logout 
+    const logout = () => {
+        localStorage.removeItem("token")
+        setKey(Math.random())
+        router.push('/login')
+
+    }
+
 
     useEffect(() => {
+        router.events.on('routeChangeStart', () => {
+            setProgress(40)
+        })
+        router.events.on('routeChangeComplete', () => {
+            setProgress(100)
+        })
         try {
             if (localStorage.getItem("cart")) {
                 setCart(JSON.parse(localStorage.getItem("cart")));
@@ -82,14 +102,28 @@ const MyApp = ({ Component, pageProps }) => {
             console.log(error);
             localStorage.clear();
         }
+        const token = localStorage.getItem("token")
+        if (token) {
+            setUser({ value: token })
+            setKey(Math.random())
+        }
+        if (!token) {
+            setUser({ value: null })
+            setKey(Math.random())
+        }
+    }, [change, subTotal, router?.query])
 
-    }, [change, subTotal])
+
     return (
         <>
-            <Navbar />
+            <LoadingBar
+                color='#6366f1'
+                waitingTime={500}
+                progress={progress}
+            />
+            <Navbar logout={logout} key1={key} user={user} />
             <Component key={subTotal} buyNow={buyNow} cart={cart} addToCart={addToCart} clearCart={clearCart} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
             <Footer />
-
         </>
     )
 }

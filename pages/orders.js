@@ -1,45 +1,105 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import mongoose from 'mongoose'
+import { useRouter } from 'next/router';
 
-const Orders = () => {
+import Order from '../model/Order';
+
+const Orders = ({ orders }) => {
+  
+  const router = useRouter()
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      router.push('/');
+    }
+  }, [])
   return (
-    <section class="text-gray-600 body-font overflow-hidden h-[90vh]">
-      <div class="container px-5 py-24 mx-auto">
-        <div class="lg:w-4/5 mx-auto flex flex-wrap">
-          <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-            <h2 class="text-sm title-font text-gray-500 tracking-widest">NextEcom.com</h2>
-            <h1 class="text-gray-900 text-3xl title-font font-medium pt-2 mb-4">OrderId: #93736h</h1>
-            <p class="leading-relaxed mb-4">Your order successfully placed.</p>
-            <div class="flex mb-4">
-              <a class="flex-grow text-indigo-500  py-2 text-lg px-1">Item Description</a>
-              <a class="flex-grow  border-gray-300 py-2 text-lg px-1">Quantity</a>
-              <a class="flex-grow  border-gray-300 py-2 text-lg px-1">SubTotal</a>
-            </div>
-
-            <div class="flex border-b mb-6 border-gray-200 py-2">
-              <span class="  text-gray-900">NextEcom Tshirt</span>
-              <span class="mx-auto pl-10 text-gray-900">1</span>
-              <span class="mx-auto  text-gray-900">₹499</span>
-            </div>
-            <div class="flex border-b mb-6 border-gray-200 py-2">
-              <span class=" text-gray-900">NextEcom Tshirt</span>
-              <span class="mx-auto pl-10 text-gray-900">1</span>
-              <span class="mx-auto text-gray-900">₹499</span>
-            </div>
-            <div class="flex border-b mb-6 border-gray-200 py-2">
-              <span class=" text-gray-900">NextEcom Tshirt</span>
-              <span class="mx-auto pl-10 text-gray-900">1</span>
-              <span class="mx-auto text-gray-900">₹499</span>
-            </div>
-            <div class="flex">
-              <span class="title-font font-medium text-2xl text-gray-900">₹1458.00</span>
-              <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Track Order</button>
-            </div>
-          </div>
-          <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400" />
-        </div>
+    <>
+      <div className="relative overflow-x-auto min-h-[90vh]">
+        <h1 className='text-center text-2xl font-semibold py-10'>My order</h1>
+        <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b dark:border-gray-300 dark:bg-white dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Product name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Color
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Category
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Price
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-white border-b dark:bg-white dark:border-gray-400">
+              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-800">
+                Apple MacBook Pro 17"
+              </th>
+              <td className="px-6 py-4">
+                Silver
+              </td>
+              <td className="px-6 py-4">
+                Laptop
+              </td>
+              <td className="px-6 py-4">
+                $2999
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-white dark:border-gray-400">
+              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-800">
+                Microsoft Surface Pro
+              </th>
+              <td className="px-6 py-4">
+                White
+              </td>
+              <td className="px-6 py-4">
+                Laptop PC
+              </td>
+              <td className="px-6 py-4">
+                $1999
+              </td>
+            </tr>
+            <tr className="bg-white dark:bg-white">
+              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-800">
+                Magic Mouse 2
+              </th>
+              <td className="px-6 py-4">
+                Black
+              </td>
+              <td className="px-6 py-4">
+                Accessories
+              </td>
+              <td className="px-6 py-4">
+                $99
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
+    </>
+
   )
 }
+
+export const getServerSideProps = async (context) => {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI)
+  }
+
+  let orders = await Order.find({})
+
+
+
+  // console.log(product);
+
+
+  return {
+    props: { orders: orders }
+  }
+}
+
 
 export default Orders

@@ -1,80 +1,87 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 
 
 const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }) => {
-
+  const router = useRouter()
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      router.push('/');
+    }
+  }, [])
 
   return (
+
     <div key={subTotal} className="">
       <div className="contain md:px-5 mt-10 md:h-[83vh]">
-        <div className="cart_heading grid grid-five-column">
-          <p>Item</p>
-          <p className="cart-hide">Price</p>
-          <p>Quantity</p>
-          <p className="cart-hide">SubTotal</p>
-          <p>Remove</p>
-        </div>
-        <hr />
-        {Object.keys(cart).map((k) => {
-          return <div key={k}>
-            <div className="cart-item">
-              <div className="cart_heading grid grid-five-column">
-                <div className="cart-image--name">
-                  <div>
-                    fig
-                    <figure>
-                      {/* <img src={cart[k]?.img} alt={"image"} /> */}
-                    </figure>
-                  </div>
+        <div className="p-2 w-full row">
+          <div className="cart_heading grid grid-five-column">
+            <p>Item</p>
+            <p className="cart-hide">Price</p>
+            <p>Quantity</p>
+            <p className="cart-hide">SubTotal</p>
+          </div>
+          <hr />
 
-                  <div>
-                    <p>{cart[k].name}</p>
-                    <div className="color-div">
-                      <p>Color: {<button className={`border-2 border-gray-300 ml-1 bg-${cart[k].variant}-500 rounded-full w-4 h-4 focus:outline-none`}></button>}</p>
+          {Object.keys(cart).map((k) => {
+            return <div key={k}>
+              <div className="cart-item">
+                <div className="cart_heading grid grid-five-column">
+                  <div className="cart-image--name">
+                    <div>
+                      fig
+                      <figure>
+                        {/* <img src={image} alt={id} /> */}
+                      </figure>
+                    </div>
+
+                    <div>
+                      <p>{cart[k].name}</p>
+                      <div className="color-div">
+                        <p>Color: {<button className={`border-2 border-gray-300 ml-1 bg-${cart[k].variant}-500 rounded-full w-4 h-4 focus:outline-none`}></button>}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* price  */}
-                <div className="cart-hide">
-                  <p> ₹{cart[k].price}</p>
-                </div>
+                  {/* price  */}
+                  <div className="cart-hide">
+                    <p> ₹{cart[k].price}</p>
+                  </div>
 
-                <div >
-                  <div className="cart-button">
-                    <div className="amount-toggle">
-                      <button >
-                        <FaMinus onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
-                      </button>
-                      <div className="amount-style">{cart[k].qty}</div>
-                      <button >
-                        <FaPlus onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
-                      </button>
+                  <div >
+                    <div className="cart-button">
+                      <div className="amount-toggle">
+                        <button >
+                          <FaMinus onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
+                        </button>
+                        <div className="amount-style">{cart[k].qty}</div>
+                        <button >
+                          <FaPlus onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="card-hide">
-                  <p>₹{subTotal}</p>
-                </div>
+                  <div className="card-hide">
+                    <p>₹{subTotal}</p>
+                  </div>
 
-                <div>
-                  <FaTrash onClick={() => { removeFromCart(k, cart[k].qty, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} className=" text-red-500 hover:text-red-600 cursor-pointer remove_icon" />
                 </div>
               </div>
+              <hr />
             </div>
-            <hr />
+          })}
+
+
+          <div className="cart-two-button">
+            <Link href={"/checkout"}>
+              <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-4 px-6 focus:outline-none hover:bg-indigo-600 rounded">CHECKOUT</button>
+            </Link>
+
+            <button onClick={clearCart} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-red-500 border-0 py-4 px-6 focus:outline-none hover:bg-red-600 rounded">CLEAR CART</button>
           </div>
-        })}
-
-        <div className="cart-two-button">
-          <Link href={"/checkout"}>
-            <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-4 px-6 focus:outline-none hover:bg-indigo-600 rounded">CHECKOUT</button>
-          </Link>
-
-          <button onClick={clearCart} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-red-500 border-0 py-4 px-6 focus:outline-none hover:bg-red-600 rounded">CLEAR CART</button>
         </div>
 
         {/* order Total  */}
@@ -195,8 +202,8 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
            display: flex;
            justify-content: center;
            align-items: center;
-           gap: 2.4rem;
-           font-size: 1.4rem;
+           gap: 1.2rem;
+           font-size: 1rem;
        
            button {
              border: none;
