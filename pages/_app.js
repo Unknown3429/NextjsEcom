@@ -105,8 +105,8 @@ const MyApp = ({ Component, pageProps }) => {
         const token = localStorage.getItem("token")
         if (token) {
             setUser({ value: token })
-            setKey(Math.random())
         }
+        setKey(Math.random())
         if (!token) {
             setUser({ value: null })
             setKey(Math.random())
@@ -122,7 +122,7 @@ const MyApp = ({ Component, pageProps }) => {
                 progress={progress}
             />
             <Navbar logout={logout} key1={key} user={user} />
-            <Component key={subTotal} buyNow={buyNow} cart={cart} addToCart={addToCart} clearCart={clearCart} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
+            <Component buyNow={buyNow} cart={cart} addToCart={addToCart} clearCart={clearCart} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
             <Footer />
         </>
     )

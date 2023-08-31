@@ -14,10 +14,10 @@ import 'react-toastify/dist/ReactToastify.css';
 const Slug = ({ addToCart, variant, product, buyNow }) => {
     const router = useRouter();
 
-    console.log(variant, product);
+    // console.log(variant, product);
 
     const addcolor = product?.color
-    console.log(addcolor);
+    // console.log(addcolor);
 
     const { slug } = router.query
     const [pin, setPin] = useState();

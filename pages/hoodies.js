@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import Product from '../model/Product'
 
 const Hoodies = ({ products }) => {
-  console.log(products);
+  // console.log(products);
   return (
     <div>
       <section className="text-gray-600 body-font ">

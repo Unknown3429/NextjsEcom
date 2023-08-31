@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
 
 const OredrSchema = new mongoose.Schema({
-    userId: { type: String, required: true },
-    products: [{
-        productId: { type: String, required: true },
-        required: { type: String, default: 1 }
-    }],
-    address: { type: String, required: true },
+    email: { type: String, required: true },
+    O_id: { type: String, required: true },
+    products: { type: Object, required: true },
     amount: { type: Number, required: true },
-    status: { type: String, default: "Pending", required: true },
+    address: { type: String, required: true },
+    status: { type: String, default: "Pending" },
 }, { timestamps: true });
 
-mongoose.models = {};
+// mongoose.models = {};
 
-export default mongoose.model("Orders", OredrSchema);
+export default mongoose.models.Order || mongoose.model("Order", OredrSchema);

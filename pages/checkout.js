@@ -1,9 +1,82 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import Script from 'next/script';
+// const Razorpay = require('razorpay');
 
 const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
+
+  // for validation 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [phone, setPhone] = useState('');
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [resData, setResData] = useState('')
+  const [disabled, setDisabled] = useState(true);
+
+
+  const handleChange = (e) => {
+    if (e.target.name == "name") {
+      setName(e.target.value)
+    }
+    else if (e.target.name == "email") {
+      setEmail(e.target.value)
+    }
+    else if (e.target.name == "address") {
+      setAddress(e.target.value)
+    }
+    else if (e.target.name == "pincode") {
+      setPincode(e.target.value)
+    }
+    else if (e.target.name == "phone") {
+      setPhone(e.target.value)
+    }
+    setTimeout(() => {
+      // console.log(pincode.length, phone.length);
+      if (name.length > 4 && email.includes("@") && email.length > 4 && address.length > 5 && pincode.length > 5 && phone.length > 9) {
+        setDisabled(false)
+      }
+      else {
+        setDisabled(true)
+      }
+    }, 1000);
+
+  }
+
+  // for calling razorPay api 
+  const handlePay = async (amount) => {
+    const body = { email, phone, address, subTotal, product: cart }
+    const data = await fetch("http://localhost:3000/api/razorpay", {
+      method: 'POST',
+      body: JSON.stringify(body)
+      // Adding headers to the request
+    }
+    )
+    // razor pay functions and detailes 
+    var options = {
+      "key": process.env.NEXT_PUBLIC_RAZORPAY_API_KEY, // Enter the Key ID generated from the Dashboard
+      "amount": subTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": data?.currency,
+      "name": "Acme Corp", //your business name
+      "description": "Test Transaction",
+      // "image": "https://example.com/your_logo",
+      // "order_id": data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+      "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+        "name": "Gaurav Kumar", //your customer's name
+      },
+      "theme": {
+        "color": "#6366f1"
+      }
+    };
+    const paymentObject = new Razorpay(options);
+    paymentObject.open()
+  }
   return (
     <div>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">
@@ -12,51 +85,57 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
             <h2 className='text-xl font-bold mb-4'>1. Dilevery Detailes</h2>
             <div className="flex flex-wrap -m-2">
+
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="name" className="leading-7 text-sm text-gray-600">Name</label>
-                  <input type="text" id="name" name="name" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input onChange={handleChange} value={name} type="text" id="name" name="name" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
+
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-                  <input type="email" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input onChange={handleChange} value={email} type="email" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
+
               <div className="p-2 w-full">
                 <div className="relative">
                   <label htmlFor="address" className="leading-7 text-sm text-gray-600">Address</label>
-                  <textarea id="address" name="address" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                  <textarea onChange={handleChange} value={address} id="address" name="address" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                </div>
+              </div>
+
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone</label>
+                  <input onChange={handleChange} value={phone} type="text" id="phone" name="phone" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                </div>
+              </div>
+
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label htmlFor="pincode" className="leading-7 text-sm text-gray-600">Pincode</label>
+                  <input onChange={handleChange} value={pincode} type="text" id="pincode" name="pincode" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 zfocus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
 
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="city" className="leading-7 text-sm text-gray-600">City</label>
-                  <input type="text" id="city" name="city" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input type="text" value={city} id="city" name="city" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
                 </div>
               </div>
+
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-                  <input type="text" id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input type="text" value={state} id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
                 </div>
               </div>
 
 
-              <div className="p-2 w-1/2">
-                <div className="relative">
-                  <label htmlFor="pincode" className="leading-7 text-sm text-gray-600">Pincode</label>
-                  <input type="text" id="pincode" name="pincode" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                </div>
-              </div>
-              <div className="p-2 w-1/2">
-                <div className="relative">
-                  <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone</label>
-                  <input type="text" id="phone" name="phone" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                </div>
-              </div>
 
               {/* cart review  */}
 
@@ -112,7 +191,7 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
                 })}
               </div>
               <div className="p-2 w-full">
-                <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-16 focus:outline-none hover:bg-indigo-600 rounded text-lg">Pay ₹{subTotal}</button>
+                <button disabled={disabled} onClick={() => handlePay(subTotal)} className=" disabled:bg-indigo-400 flex mx-auto text-white bg-indigo-500 border-0 py-2 px-16 focus:outline-none hover:bg-indigo-600 rounded text-lg">Pay ₹{subTotal}</button>
               </div>
             </div>
           </div>

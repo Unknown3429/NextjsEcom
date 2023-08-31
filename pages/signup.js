@@ -34,7 +34,7 @@ const SignUp = () => {
     })
 
     let response = await res.json();
-    console.log(response);
+    // console.log(response);
     setEmail('');
     setName('');
     setPassword('');
