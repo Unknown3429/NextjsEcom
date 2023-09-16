@@ -12,6 +12,7 @@
     "mongoose": "^7.4.3",
     "next": "latest",
     "nextjs": "^0.0.3",
+    "ngrok": "^5.0.0-beta.2",
     "razorpay": "^2.9.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

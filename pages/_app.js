@@ -37,7 +37,8 @@ const MyApp = ({ Component, pageProps }) => {
     // buy now button
 
     const buyNow = (itemCode, qty, price, name, size, variant) => {
-        let newCart = { itemCode: { qty, price, name, size, variant } };
+        let newCart = {};
+        newCart[itemCode] = { qty, price, name, size, variant };
         // newCart[itemCode] = { qty: 1, name, price, size, variant }
         clearCart()
         setCart(newCart)
@@ -111,7 +112,7 @@ const MyApp = ({ Component, pageProps }) => {
             setUser({ value: null })
             setKey(Math.random())
         }
-    }, [change, subTotal, router?.query])
+    }, [change, subTotal, router?.query,])
 
 
     return (

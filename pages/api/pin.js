@@ -1,5 +1,8 @@
 
-
 export default function handler(req, res) {
-    res.status(200).json([110042, 10089, 110089, 225500])
+    let pin = {
+        "110042":["Delhi", "Delhi"],
+        "110089":["Rohini", "Delhi"]
+    }
+    res.status(200).json(pin)
 }

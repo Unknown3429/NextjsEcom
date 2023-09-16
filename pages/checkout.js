@@ -17,25 +17,51 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
   const [disabled, setDisabled] = useState(true);
 
 
-  const handleChange = (e) => {
+
+  const handleChange = async (e) => {
+
+
     if (e.target.name == "name") {
       setName(e.target.value)
     }
+
     else if (e.target.name == "email") {
       setEmail(e.target.value)
     }
+
     else if (e.target.name == "address") {
       setAddress(e.target.value)
     }
+
     else if (e.target.name == "pincode") {
       setPincode(e.target.value)
+
+      // check city and state 
+      const pins = await fetch("http://localhost:3000/api/pin");
+      const pinJson = await pins.json()
+
+      if (Object.keys(pinJson).includes(e.target.value)) {
+        if (e.target.value.length == 6) {
+          setCity(pinJson[e.target.value][0])
+          setState(pinJson[e.target.value][1])
+        }
+        else {
+          setCity("");
+          setState("")
+        }
+      }
+      else {
+        setCity("");
+        setState("")
+      }
     }
+
     else if (e.target.name == "phone") {
       setPhone(e.target.value)
     }
     setTimeout(() => {
-      // console.log(pincode.length, phone.length);
-      if (name.length > 4 && email.includes("@") && email.length > 4 && address.length > 5 && pincode.length > 5 && phone.length > 9) {
+      // console.log(phone.length);
+      if (name.length > 4 && email.includes("@") && email.length > 4 && address.length > 5 && pincode.length == 6 && phone.length == 10) {
         setDisabled(false)
       }
       else {
@@ -47,7 +73,7 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
 
   // for calling razorPay api 
   const handlePay = async (amount) => {
-    const body = { email, phone, address, subTotal, product: cart }
+    const body = { email, phone, address, subTotal,  cart }
     const data = await fetch("http://localhost:3000/api/razorpay", {
       method: 'POST',
       body: JSON.stringify(body)
@@ -61,9 +87,11 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
       "currency": data?.currency,
       "name": "Acme Corp", //your business name
       "description": "Test Transaction",
+      // "callback_url": 'https://your-server/callback_url',
+      "redirect": true,
       // "image": "https://example.com/your_logo",
       // "order_id": data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+      "callback_url": `http://localhost:3000/api/afterPayment`,
       "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         "name": "Gaurav Kumar", //your customer's name
       },
@@ -72,6 +100,7 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
       }
     };
     const paymentObject = new Razorpay(options);
+    // console.log(paymentObject);
     paymentObject.open()
   }
   return (
@@ -124,14 +153,14 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="city" className="leading-7 text-sm text-gray-600">City</label>
-                  <input type="text" value={city} id="city" name="city" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
+                  <input type="text" onChange={handleChange} value={city} id="city" name="city" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
                 </div>
               </div>
 
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-                  <input type="text" value={state} id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
+                  <input type="text" onChange={handleChange} value={state} id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} />
                 </div>
               </div>
 

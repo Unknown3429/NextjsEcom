@@ -25,7 +25,7 @@ const Slug = ({ addToCart, variant, product, buyNow }) => {
     const handlePin = async () => {
         const pins = await fetch("http://localhost:3000/api/pin");
         const pinJson = await pins.json()
-        if (pinJson.includes(parseInt(pin))) {
+        if (Object.keys(pinJson).includes((pin))) {
             setService(true)
             toast.success('This Pincode is serviceble!', {
                 position: "bottom-center",
