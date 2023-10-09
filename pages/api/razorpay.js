@@ -17,10 +17,13 @@ const handler = async (req, res) => {
             receipt: (Math.random() * 29).toString()
         };
         try {
-
             // checking cart is tempered or not
             let product, sumTotal = 0
             let cart = req.body.cart
+            if (req.body.subTotal <= 0) {
+                res.status(200).json({ error: "Please buils your cart and try again" })
+                return
+            }
             for (let item in cart) {
                 product = await Product.findOne({ slug: item })
                 sumTotal += cart[item]?.price * cart[item]?.qty;
@@ -47,8 +50,12 @@ const handler = async (req, res) => {
             let order = new Order({
                 email: JSON.parse(req.body).email,
                 address: JSON.parse(req.body).address,
+                city: JSON.parse(req.body).city,
+                state: JSON.parse(req.body).state,
+                pincode: JSON.parse(req.body).pincode,
                 amount: JSON.parse(req.body).subTotal,
                 products: JSON.parse(req.body).cart,
+                phone: JSON.parse(req.body).phone,
                 O_id: response?.id
             })
 

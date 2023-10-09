@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('myuser')) {
       router.push('/');
     }
   }, [])
@@ -41,7 +41,8 @@ const Login = () => {
     setEmail('');
     setPassword('');
     if (response.success) {
-      localStorage.setItem("token", response?.token)
+      console.log(response?.email, response?.token,);
+      localStorage.setItem('myuser', JSON.stringify({ token: response?.token, email: response?.email }))
       toast.success(`${response.name} You are SignIn`, {
         position: "bottom-center",
         autoClose: 2000,

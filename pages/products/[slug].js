@@ -5,19 +5,16 @@ import { useCartContext } from '../../context/cartContext';
 import { AiTwotoneThunderbolt } from "react-icons/ai"
 import { BsFillCartFill } from "react-icons/bs"
 import mongoose from 'mongoose'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Error from 'next/error'
 
 import Product from '../../model/Product';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-const Slug = ({ addToCart, variant, product, buyNow }) => {
+const Slug = ({ addToCart, variant, product, buyNow, errorCode }) => {
     const router = useRouter();
 
-    // console.log(variant, product);
-
     const addcolor = product?.color
-    // console.log(addcolor);
 
     const { slug } = router.query
     const [pin, setPin] = useState();
@@ -36,7 +33,7 @@ const Slug = ({ addToCart, variant, product, buyNow }) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                });
+            });
         }
         else {
             setService(false)
@@ -49,7 +46,7 @@ const Slug = ({ addToCart, variant, product, buyNow }) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                });
+            });
         }
     }
 
@@ -65,6 +62,11 @@ const Slug = ({ addToCart, variant, product, buyNow }) => {
         window.location = url
 
     }
+
+    if (errorCode) {
+        return <Error statusCode={404} />
+      }
+     
     return <>
         <section className="text-gray-600 body-font overflow-hidden">
             <ToastContainer
@@ -158,7 +160,8 @@ const Slug = ({ addToCart, variant, product, buyNow }) => {
                             </div>
                         </div>
                         <div className="flex">
-                            <span className="title-font font-medium text-2xl text-gray-900">₹{product?.price}</span>
+                            {product.availableQty > 0 && <span className="title-font font-medium text-2xl text-gray-900">₹{product?.price}</span>}
+                            {product.availableQty <= 0 && <span className="title-font font-medium text-2xl text-gray-900">Out Of Stock!</span>}
 
                             <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                 <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
@@ -204,8 +207,17 @@ export const getServerSideProps = async (context) => {
     }
 
     let product = await Product.findOne({ slug: context.query.slug })
+    let errorCode = product == null ? 404 : null;
+    if (product == null) {
+        return {
+            props: { errorCode: errorCode },
+        }
+    }
     let variant = await Product.find({ title: product?.title })
     let colorSizeSlug = {};
+
+
+
 
     for (let item of variant) {
         if (Object.keys(colorSizeSlug).includes(item.color)) {

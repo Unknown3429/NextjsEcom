@@ -12,7 +12,6 @@ import { useRouter } from "next/router"
 const MyApp = ({ Component, pageProps }) => {
     const router = useRouter()
     const [progress, setProgress] = useState(0)
-    // const { addToCart } = useCartContext()
     const [cart, setCart] = useState({});
     const [subTotal, setSubTotal] = useState(0);
     const [change, setChange] = useState(0)
@@ -81,7 +80,7 @@ const MyApp = ({ Component, pageProps }) => {
 
     // for logout 
     const logout = () => {
-        localStorage.removeItem("token")
+        localStorage.removeItem("myuser")
         setKey(Math.random())
         router.push('/login')
 
@@ -103,12 +102,12 @@ const MyApp = ({ Component, pageProps }) => {
             console.log(error);
             localStorage.clear();
         }
-        const token = localStorage.getItem("token")
-        if (token) {
-            setUser({ value: token })
+        const myuser = JSON.parse(localStorage.getItem("myuser"))
+        if (myuser) {
+            setUser({ value: myuser.token, email: myuser?.email })
         }
         setKey(Math.random())
-        if (!token) {
+        if (!myuser) {
             setUser({ value: null })
             setKey(Math.random())
         }
@@ -123,7 +122,7 @@ const MyApp = ({ Component, pageProps }) => {
                 progress={progress}
             />
             <Navbar logout={logout} key1={key} user={user} />
-            <Component buyNow={buyNow} cart={cart} addToCart={addToCart} clearCart={clearCart} removeFromCart={removeFromCart} subTotal={subTotal} {...pageProps} />
+            <Component buyNow={buyNow} cart={cart} addToCart={addToCart} clearCart={clearCart} removeFromCart={removeFromCart} subTotal={subTotal} user={user} {...pageProps} />
             <Footer />
         </>
     )

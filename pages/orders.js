@@ -15,7 +15,7 @@ const MyOrders = ({ }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token: localStorage.getItem('token') })
+        body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token })
         // Adding headers to the request
       }
       )
@@ -23,7 +23,7 @@ const MyOrders = ({ }) => {
       setOrders(res.orders)
     }
 
-    if (!localStorage.getItem('token')) {
+    if (!localStorage.getItem('myuser')) {
       router.push('/');
     }
 

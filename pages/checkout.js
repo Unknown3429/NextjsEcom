@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import Script from 'next/script';
 // const Razorpay = require('razorpay');
 
-const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
+const checkout = ({ cart, removeFromCart, addToCart, subTotal, user }) => {
 
   // for validation 
   const [name, setName] = useState('');
@@ -16,10 +16,16 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
   const [resData, setResData] = useState('')
   const [disabled, setDisabled] = useState(true);
 
+  useEffect(() => {
+    if (!localStorage.getItem('myuser')) {
+      router.push('/');
+    } else {
+      fetchUser(user?.value)
+    }
+  }, [user?.value])
 
 
   const handleChange = async (e) => {
-
 
     if (e.target.name == "name") {
       setName(e.target.value)
@@ -37,23 +43,7 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
       setPincode(e.target.value)
 
       // check city and state 
-      const pins = await fetch("http://localhost:3000/api/pin");
-      const pinJson = await pins.json()
-
-      if (Object.keys(pinJson).includes(e.target.value)) {
-        if (e.target.value.length == 6) {
-          setCity(pinJson[e.target.value][0])
-          setState(pinJson[e.target.value][1])
-        }
-        else {
-          setCity("");
-          setState("")
-        }
-      }
-      else {
-        setCity("");
-        setState("")
-      }
+       getpin(e.target.value)
     }
 
     else if (e.target.name == "phone") {
@@ -61,7 +51,7 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
     }
     setTimeout(() => {
       // console.log(phone.length);
-      if (name.length > 4 && email.includes("@") && email.length > 4 && address.length > 5 && pincode.length == 6 && phone.length == 10) {
+      if (name.length > 4 && address.length > 5 && pincode.length == 6) {
         setDisabled(false)
       }
       else {
@@ -71,9 +61,48 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
 
   }
 
+  //for getting pincode 
+  const getpin = async(pin) => {
+    const pins = await fetch("http://localhost:3000/api/pin");
+    const pinJson = await pins.json()
+
+    if (Object.keys(pinJson).includes(pin)) {
+      if (pin?.length == 6) {
+        setCity(pinJson[pin][0])
+        setState(pinJson[pin][1])
+      }
+      else {
+        setCity("");
+        setState("")
+      }
+    }
+    else {
+      setCity("");
+      setState("")
+    }
+  }
+
+  // for geting all values of user
+  const fetchUser = async (token) => {
+    let body = { token, address, phone, pincode }
+    const data = await fetch("http://localhost:3000/api/getUser", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    const res = await data.json()
+    setName(res?.name)
+    setPincode(res?.pincode)
+    getpin(res?.pincode)
+    setPhone(res?.phone)
+    setAddress(res?.address)
+  }
+
   // for calling razorPay api 
   const handlePay = async (amount) => {
-    const body = { email, phone, address, subTotal,  cart }
+    const body = { email, phone, address, subTotal, cart, city, state, pincode, phone }
     const data = await fetch("http://localhost:3000/api/razorpay", {
       method: 'POST',
       body: JSON.stringify(body)
@@ -121,13 +150,18 @@ const checkout = ({ cart, clearCart, removeFromCart, addToCart, subTotal }) => {
                   <input onChange={handleChange} value={name} type="text" id="name" name="name" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 /text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
-
-              <div className="p-2 w-1/2">
+              {user.value ? <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
+                  <input onChange={handleChange} value={user?.email} readOnly={true} type="email" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                </div>
+              </div> : <div className="p-2 w-1/2">
                 <div className="relative">
                   <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
                   <input onChange={handleChange} value={email} type="email" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
-              </div>
+              </div>}
+
 
               <div className="p-2 w-full">
                 <div className="relative">

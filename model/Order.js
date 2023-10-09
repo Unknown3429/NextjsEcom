@@ -7,6 +7,10 @@ const OredrSchema = new mongoose.Schema({
     payment_id: { type: String, default:"Unpaid" },
     amount: { type: Number, required: true },
     address: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    pincode: { type: String, required: true },
+    phone: { type: String, required: true },
     status: { type: String, default: "Pending" },
 }, { timestamps: true });
 

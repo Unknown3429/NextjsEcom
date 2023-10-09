@@ -19,7 +19,7 @@ const handler = async (req, res) => {
             if (req.body.email == user.email && password == JSON.parse(userPassword)) {
                 var jwt = require('jsonwebtoken');
                 var token = jwt.sign({ name: user?.name, email: user?.email }, process.env.JWT_SECRET);
-                res.status(200).json({ success: true, name: user?.name, token })
+                res.status(200).json({ success: true, name: user?.name, token, email:user?.email })
             }
             else {
                 res.status(400).json({ success: false, error: "Invalid Credentials" })

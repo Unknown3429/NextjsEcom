@@ -5,7 +5,7 @@ const CartContext = createContext();
 
 const intialState = {
     // cart: [],
-    cart: [],
+    cart2: [],
     total_item: "",
     total_price: "",
     shipping_fee: 50000,
@@ -15,12 +15,12 @@ const CartProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, intialState);
 
     // For aading New Item 
-    const addToCart = ( itemCode, qty, name, size, variant ) => {
-        dispatch({ type: "ADD_TO_CART", payload: { itemCode, qty, name, size, variant } })
+    const addToCart2 = (itemCode, qty, name, size, variant) => {
+        dispatch({ type: "ADD_TO_CART", payload: itemCode, qty, name, size, variant })
     }
 
     return (
-        <CartContext.Provider value={{addToCart}}>
+        <CartContext.Provider value={{ ...state, addToCart2 }}>
             {children}
         </CartContext.Provider>
     )

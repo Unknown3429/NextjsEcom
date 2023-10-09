@@ -1,5 +1,8 @@
+import Slider from '../components/Slider';
 import Head from 'next/head';
 import Image from 'next/image';
+// import Services from '../components/services';
+
 
 export default function Home() {
   return (
@@ -7,19 +10,22 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="<NODE_MODULES_FOLDER>/react-responsive-carousel/lib/styles/carousel.min.css" />
       </Head>
 
+
       <div className="main">
-        <Image className='mainImg'
+        <Slider />
+        {/* <Image className='mainImg'
           width={0}
           height={0}
           sizes="100vw"
-
           style={{ width: '100%', height: '60vh', objectFit: "cover" }}
-          src={"/main3.jpg"} alt='main' />
+          src={"/main3.jpg"} alt='main' /> */}
       </div>
 
       <section className="text-gray-600 body-font ">
+        {/* <Slider /> */}
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-wrap w-full mb-20">
             <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
@@ -61,10 +67,14 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div>
+            {/* <Services /> */}
+          </div>
+
         </div>
       </section>
 
-    
+
 
       <style jsx global>{`
       
@@ -72,3 +82,4 @@ export default function Home() {
     </div>
   )
 }
+

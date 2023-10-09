@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import Product from '../model/Product'
 
 const Tshirts = ({ products }) => {
-  // console.log(products);
+  // console.log(products.availableQty);
 
   return (
     <div>
@@ -72,6 +72,10 @@ export const getServerSideProps = async (context) => {
       if (item?.availableQty > 0) {
         tshirts[item.title].color = [item.color];
         tshirts[item.title].size = [item.size];
+      }
+      else{
+        tshirts[item.title].color = [];
+        tshirts[item.title].size = [];
       }
     }
 

@@ -5,7 +5,7 @@ const cartReducer = (state, action) => {
         case "ADD_TO_CART":
             const { cart } = state;
             let { itemCode, qty, name, size, variant } = action.payload;
-            let updatedCart = cart
+            let updatedCart ;
             if (itemCode in cart) {
                 updatedCart[itemCode].qty = cart[itemCode].qty + qty
             }

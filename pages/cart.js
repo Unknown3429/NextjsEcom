@@ -2,43 +2,50 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import Image from 'next/image';
 
 
 const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }) => {
   const router = useRouter()
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!localStorage.getItem('myuser')) {
       router.push('/');
     }
   }, [])
 
+  if (Object.keys(cart).length <= 0) {
+    return (
+      <div className='flex flex-col min-h-screen text-center items-center pt-20 md:pt-32 '>
+        <Image src={'/notFound.png'}
+          width={500}
+          height={500}
+          alt="No Products Added In Cart" />
+        <h1 className='font-semibold'>Please Add Products In Cart</h1>
+      </div>
+    )
+  }
   return (
-
-    <div key={subTotal} className="">
-      <div className="contain md:px-5 mt-10 md:h-[83vh]">
+    <div key={subTotal} >
+      <div className="contain md:px-5 mt-10 md:h-screen lg:h-[105vh]">
         <div className="p-2 w-full row">
-          <div className="cart_heading grid grid-five-column">
+          <div className="cart_heading grid grid-five-column  md:ml-0">
             <p>Item</p>
             <p className="cart-hide">Price</p>
-            <p>Quantity</p>
-            <p className="cart-hide">SubTotal</p>
+            <p className='ml-5 md:ml-0'>Quantity</p>
+            <p className="ml-5 md:ml-0">SubTotal</p>
           </div>
           <hr />
 
           {Object.keys(cart).map((k) => {
             return <div key={k}>
-              <div className="cart-item">
+              <div className="cart-item md:ml-0 ml-8">
                 <div className="cart_heading grid grid-five-column">
                   <div className="cart-image--name">
-                    <div>
-                      fig
-                      <figure>
-                        {/* <img src={image} alt={id} /> */}
-                      </figure>
+                    <div className='cart-hide md:hello'>
                     </div>
 
                     <div>
-                      <p>{cart[k].name}</p>
+                      <p className=''>{cart[k].name}</p>
                       <div className="color-div">
                         <p>Color: {<button className={`border-2 border-gray-300 ml-1 bg-${cart[k].variant}-500 rounded-full w-4 h-4 focus:outline-none`}></button>}</p>
                       </div>
@@ -64,7 +71,7 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
                     </div>
                   </div>
 
-                  <div className="card-hide">
+                  <div className="ml-8 md:ml-0">
                     <p>₹{subTotal}</p>
                   </div>
 
@@ -72,6 +79,7 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
               </div>
               <hr />
             </div>
+
           })}
 
 
@@ -85,9 +93,8 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
         </div>
 
         {/* order Total  */}
-        <div className="order-total--amount">
-          <div className="order-total--subdata p-10 w-[20vw]">
-
+        <div className="order-total--amount ">
+          <div className="mx-5 order-total--subdata p-5 w-[35vw] bg-gray-200">
             <div>
               <p>SubTotal:</p>
               <p>₹500</p>
@@ -97,8 +104,7 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
               <p>Shipping-Fee:</p>
               <p>₹50</p>
             </div>
-
-            <hr />
+            <hr className='bg-white h-[3px] mb-2' />
             <div>
               <p>Oredr Total:</p>
               <p>₹550</p>
@@ -119,6 +125,10 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
          .grid-four-column {
            grid-template-columns: repeat(4, 1fr);
          }
+
+         .grid-three-column {
+          grid-template-columns: repeat(3, 1fr);
+        }
        
          .grid-five-column {
            grid-template-columns: repeat(4, 1fr) 0.3fr;
@@ -234,10 +244,6 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
        
            .order-total--subdata {
              border: 0.1rem solid #f0f0f0;
-             display: flex;
-             flex-direction: column;
-             gap: 1.8rem;
-             padding: 3.2rem;
            }
            div {
              display: flex;
@@ -255,9 +261,9 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
            }
          }
        
-         @media (max-width: 998px){
+         @media (max-width: 600px){
            .grid-five-column {
-             grid-template-columns: 1.5fr 1fr 0.5fr;
+            grid-template-columns: repeat(3, 1fr);
            }
            .cart-hide {
              display: none;
@@ -272,10 +278,11 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
            }
        
            .order-total--amount {
-             width: 100%;
+             width: 85%;
              text-transform: capitalize;
              justify-content: flex-start;
              align-items: flex-start;
+
        
              .order-total--subdata {
                width: 100%;
@@ -283,10 +290,11 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
                display: flex;
                flex-direction: column;
                gap: 1.8rem;
-               padding: 3.2rem;
              }
            }
          }
+
+
       `}</style>
       </div>
     </div>
