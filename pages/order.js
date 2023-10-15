@@ -3,11 +3,13 @@ import Order from '../model/Order'
 import mongoose from 'mongoose';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { useCartContext } from '../context/cartContext';
 
 
 
-const MyOrder = ({ order, clearCart }) => {
+const MyOrder = ({ order}) => {
     const router = useRouter();
+    const {clearCart} = useCartContext()
     // console.log(order);
     const products = order.products
     useEffect(() => {

@@ -5,6 +5,7 @@ import Product from '../model/Product'
 
 const Tshirts = ({ products }) => {
   // console.log(products.availableQty);
+  console.log("tshirts", products);
 
   return (
     <div>
@@ -73,7 +74,7 @@ export const getServerSideProps = async (context) => {
         tshirts[item.title].color = [item.color];
         tshirts[item.title].size = [item.size];
       }
-      else{
+      else {
         tshirts[item.title].color = [];
         tshirts[item.title].size = [];
       }

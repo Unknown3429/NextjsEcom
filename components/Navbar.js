@@ -145,7 +145,7 @@ const Navbar = ({ key1, logout, user }) => {
 
 
             {/* bottom navigation bar  */}
-            < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600" >
+            < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-900 dark:border-gray-600" >
                 <div className="grid h-full grid-cols-5 mx-auto">
                     <button data-tooltip-target="tooltip-home" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <Link href={"/"}>

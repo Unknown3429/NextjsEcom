@@ -11,8 +11,16 @@ import Error from 'next/error'
 
 import Product from '../../model/Product';
 
-const Slug = ({ addToCart, variant, product, buyNow, errorCode }) => {
+const Slug = ({ variant, product, errorCode }) => {
+    const { addToCart2, cart2, buyNow } = useCartContext()
     const router = useRouter();
+    // let item
+    // if (typeof window !== 'undefined') {
+    //     // Perform localStorage action
+    //     item = JSON.parse(localStorage.getItem('cart'))
+    // }
+    // let cart3 = Object.keys(item)
+    // console.log(cart3);
 
     const addcolor = product?.color
 
@@ -65,8 +73,8 @@ const Slug = ({ addToCart, variant, product, buyNow, errorCode }) => {
 
     if (errorCode) {
         return <Error statusCode={404} />
-      }
-     
+    }
+
     return <>
         <section className="text-gray-600 body-font overflow-hidden">
             <ToastContainer
@@ -191,7 +199,7 @@ const Slug = ({ addToCart, variant, product, buyNow, errorCode }) => {
 
                         <button onClick={() => { buyNow(slug, 1, product?.price, product?.title, product?.size, addcolor) }} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><AiTwotoneThunderbolt className='mt-1 mx-2' />Buy Now</button>
 
-                        <button onClick={() => { addToCart(slug, 1, product?.price, product?.title, product?.size, addcolor) }} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><BsFillCartFill className='mt-1 mx-2' />Add to Cart</button>
+                        <button onClick={() => { addToCart2(slug, 1, product?.price, product?.title, product?.size, addcolor) }} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><BsFillCartFill className='mt-1 mx-2' />Add to Cart</button>
 
                     </div>
                 </div>

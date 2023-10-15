@@ -1,125 +1,139 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import Image from 'next/image';
 
+import { useCartContext } from '../context/cartContext';
 
-const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }) => {
+
+
+
+const cart = () => {
+  const { removeFromCart, addToCart2, clearCart } = useCartContext();
+  const [isClient, setIsClient] = useState(false)
+
+
   const router = useRouter()
   useEffect(() => {
+    setIsClient(true)
     if (!localStorage.getItem('myuser')) {
       router.push('/');
     }
+
   }, [])
 
-  if (Object.keys(cart).length <= 0) {
-    return (
-      <div className='flex flex-col min-h-screen text-center items-center pt-20 md:pt-32 '>
-        <Image src={'/notFound.png'}
-          width={500}
-          height={500}
-          alt="No Products Added In Cart" />
-        <h1 className='font-semibold'>Please Add Products In Cart</h1>
-      </div>
-    )
+  let item
+  // Perform localStorage action
+  if (typeof window !== 'undefined') {
+    item = JSON.parse(localStorage.getItem('cart'))
   }
-  return (
-    <div key={subTotal} >
-      <div className="contain md:px-5 mt-10 md:h-screen lg:h-[105vh]">
-        <div className="p-2 w-full row">
-          <div className="cart_heading grid grid-five-column  md:ml-0">
-            <p>Item</p>
-            <p className="cart-hide">Price</p>
-            <p className='ml-5 md:ml-0'>Quantity</p>
-            <p className="ml-5 md:ml-0">SubTotal</p>
-          </div>
-          <hr />
+  let cart2 = item
 
-          {Object.keys(cart).map((k) => {
-            return <div key={k}>
-              <div className="cart-item md:ml-0 ml-8">
-                <div className="cart_heading grid grid-five-column">
-                  <div className="cart-image--name">
-                    <div className='cart-hide md:hello'>
-                    </div>
+  if (cart2 && Object.keys(cart2).length <= 0) {
+    return isClient && <div className='flex flex-col min-h-screen text-center items-center pt-20 md:pt-32 '>
+      <Image src={'/notFound.png'}
+        width={500}
+        height={500}
+        alt="No Products Added In Cart" />
+      <h1 className='font-semibold'>Please Add Products In Cart</h1>
+    </div>
 
-                    <div>
-                      <p className=''>{cart[k].name}</p>
-                      <div className="color-div">
-                        <p>Color: {<button className={`border-2 border-gray-300 ml-1 bg-${cart[k].variant}-500 rounded-full w-4 h-4 focus:outline-none`}></button>}</p>
-                      </div>
-                    </div>
+  }
+  return isClient && <div className='mb-20 min-h-screen' key={useCartContext} >
+    <div className="contain md:px-5 mt-10 ">
+      <div className="p-2 w-full row">
+        <div className="cart_heading grid grid-five-column  md:ml-0">
+          <p>Item</p>
+          <p className="cart-hide">Price</p>
+          <p className='ml-5 md:ml-0'>Quantity</p>
+          <p className="ml-5 md:ml-0">SubTotal</p>
+        </div>
+        <hr />
+
+        {cart2 && Object.keys(cart2).map((k) => {
+          return <div className='my-4' key={k}>
+            <div className="cart-item md:ml-0 ml-8">
+              <div className="cart_heading grid grid-five-column">
+                <div className="cart-image--name">
+                  <div className='cart-hide md:hello'>
                   </div>
 
-                  {/* price  */}
-                  <div className="cart-hide">
-                    <p> ₹{cart[k].price}</p>
-                  </div>
-
-                  <div >
-                    <div className="cart-button">
-                      <div className="amount-toggle">
-                        <button >
-                          <FaMinus onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
-                        </button>
-                        <div className="amount-style">{cart[k].qty}</div>
-                        <button >
-                          <FaPlus onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} />
-                        </button>
-                      </div>
+                  <div>
+                    <p className=''>{cart2[k].name}</p>
+                    <div className="color-div">
+                      <span>Color: {<button className={cart2[k].variant == "black" || cart2[k].variant == "white" ? `border-2 border-gray-300 ml-1 bg-${cart2[k].variant} rounded-full w-4 h-4 focus:outline-none` : `border-2 border-gray-300 ml-1 bg-${cart2[k].variant}-500 rounded-full w-4 h-4 focus:outline-none`}></button>}</span>
                     </div>
                   </div>
-
-                  <div className="ml-8 md:ml-0">
-                    <p>₹{subTotal}</p>
-                  </div>
-
                 </div>
+
+                {/* price  */}
+                <div className="cart-hide">
+                  <p> ₹{cart2[k].price}</p>
+                </div>
+
+                <div >
+                  <div className="cart-button">
+                    <div className="amount-toggle">
+                      <button >
+                        <FaMinus onClick={() => { removeFromCart(k, 1, cart2[k].price, cart2[k].name, cart2[k].size, cart2[k].variant) }} />
+                      </button>
+                      <div className="amount-style">{cart2[k].qty}</div>
+                      <button >
+                        <FaPlus onClick={() => { addToCart2(k, 1, cart2[k].price, cart2[k].name, cart2[k].size, cart2[k].variant) }} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="ml-8 md:ml-0">
+                  <p>₹{cart2[k].subt}</p>
+                </div>
+
               </div>
-              <hr />
             </div>
-
-          })}
-
-
-          <div className="cart-two-button">
-            <Link href={"/checkout"}>
-              <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-4 px-6 focus:outline-none hover:bg-indigo-600 rounded">CHECKOUT</button>
-            </Link>
-
-            <button onClick={clearCart} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-red-500 border-0 py-4 px-6 focus:outline-none hover:bg-red-600 rounded">CLEAR CART</button>
+            <hr />
           </div>
+
+        })}
+
+
+        <div className="cart-two-button">
+          <Link href={"/checkout"}>
+            <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-4 px-6 focus:outline-none hover:bg-indigo-600 rounded">CHECKOUT</button>
+          </Link>
+
+          <button onClick={clearCart} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-red-500 border-0 py-4 px-6 focus:outline-none hover:bg-red-600 rounded">CLEAR CART</button>
         </div>
+      </div>
 
-        {/* order Total  */}
-        <div className="order-total--amount ">
-          <div className="mx-5 order-total--subdata p-5 w-[35vw] bg-gray-200">
-            <div>
-              <p>SubTotal:</p>
-              <p>₹500</p>
-            </div>
-
-            <div>
-              <p>Shipping-Fee:</p>
-              <p>₹50</p>
-            </div>
-            <hr className='bg-white h-[3px] mb-2' />
-            <div>
-              <p>Oredr Total:</p>
-              <p>₹550</p>
-            </div>
-
+      {/* order Total  */}
+      <div className="order-total--amount my-10">
+        <div className="mx-5 order-total--subdata p-5 w-[35vw] bg-gray-200">
+          <div>
+            <p>SubTotal:</p>
+            <p>₹500</p>
           </div>
+
+          <div>
+            <p>Shipping-Fee:</p>
+            <p>₹50</p>
+          </div>
+          <hr className='bg-white h-[3px] mb-2' />
+          <div>
+            <p>Oredr Total:</p>
+            <p>₹550</p>
+          </div>
+
         </div>
+      </div>
 
-
-
-        <style jsx>{`
+      <style jsx>{`
          padding: 9rem 0;
 
          .contain{
             padding:0 2rem;
+            margin-bottom:5rem
          }
 
          .grid-four-column {
@@ -296,9 +310,9 @@ const cart = ({ cart, clearCart, removeFromCart, addToCart, subTotal, saveCart }
 
 
       `}</style>
-      </div>
     </div>
-  )
+  </div>
+
 }
 
 export default cart

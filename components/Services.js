@@ -1,108 +1,85 @@
-import styled from "styled-components";
-import { TbTruckDelivery } from "react-icons/tb";
-import { MdSecurity } from "react-icons/md";
-import { GiReceiveMoney } from "react-icons/gi";
-import { RiSecurePaymentLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import Skeleton from 'react-loading-skeleton'
+import Carousel from 'react-grid-carousel'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 const Services = () => {
+  const [image, setImage] = useState([])
+
+  const handleimg = async () => {
+    const img = await fetch("http://localhost:3000/api/collection");
+    let res = await img.json()
+    setImage(res)
+  }
+
+  useEffect(() => {
+    handleimg()
+  }, [])
+  if (!image) { return }
+  let img = image?.img
+  console.log(img);
+
+  if (!img) {
     return (
-        <Wrapper>
-            <div className="container">
-                <div className="grid grid-three-column">
-                    <div className="services-1">
-                        <div>
-                            <TbTruckDelivery className="icon" />
-                            <h3>Super Fast and Free Delivery</h3>
-                        </div>
-                    </div>
+      <div className="relative flex rounded-xl bg-clip-border h-[50vh]">
+        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+            <Skeleton className="object-cover object-center w-full h-[50vh]" />
+          </div>
+        </div>
+        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+            <Skeleton className="object-cover object-center w-full h-[50vh]" />
+          </div>
+        </div>
+        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+            <Skeleton className="object-cover object-center w-full h-[50vh]" />
+          </div>
+        </div>
 
-                    <div className="services-2">
-                        <div className="services-colum-2">
-                            <div>
-                                <MdSecurity className="icon" />
-                                <h3>Non-contact Shipping</h3>
-                            </div>
-                        </div>
-                        <div className="services-colum-2">
-                            <div>
-                                <GiReceiveMoney className="icon" />
-                                <h3>Money-back Guaranteed</h3>
-                            </div>
-                        </div>
-                    </div>
+      </div>
+    )
+  }
 
-                    <div className="services-3">
-                        <div>
-                            <RiSecurePaymentLine className="icon" />
-                            <h3>Super Secure Payment System</h3>
-                        </div>
-                    </div>
-                </div>
+
+  return (
+    <Carousel cols={2} rows={1} gap={8} loop
+      mobileBreakpoint={670}
+      responsiveLayout={[
+        {
+          breakpoint: 1200,
+          cols: 3
+        },
+        {
+          breakpoint: 990,
+          cols: 2
+        }
+      ]}>
+      {img && img.map((item, i) => {
+        return (
+          <Carousel.Item key={i} >
+            <div className="mb-5" key={i}>
+              <img className="h-[55vh]" width="90%" src={item} />
             </div>
-        </Wrapper>
-    );
-};
+          </Carousel.Item>
+        )
+      })}
+    </Carousel>
+    // <div className="relative flex rounded-xl bg-clip-border h-[50vh]">
+    // {img && img.map((item) => {
+    //   return <div key={item} className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    //     <div key={item} className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+    //       <img
+    //         src={item}
+    //         className="object-cover object-center h-full w-full "
+    //       />
+    //     </div>
+    //   </div>
 
-const Wrapper = styled.section`
-  padding: 9rem 0;
-
-  .grid {
-    gap: 4.8rem;
-  }
-
-  .services-1,
-  .services-2,
-  .services-3 {
-    width: auto;
-    height: 30rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    background: ${({ theme }) => theme.colors.bg};
-    text-align: center;
-    border-radius: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  }
-
-  .services-2 {
-    gap: 4rem;
-    background-color: transparent;
-    box-shadow: none;
-
-    .services-colum-2 {
-      background: ${({ theme }) => theme.colors.bg};
-      display: flex;
-      flex-direction: row;
-      flex: 1;
-      justify-content: center;
-      align-items: center;
-      border-radius: 2rem;
-      box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-
-      div {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-      }
-    }
-  }
-
-  h3 {
-    margin-top: 1.4rem;
-    font-size: 2rem;
-  }
-
-  .icon {
-    /* font-size: rem; */
-    width: 8rem;
-    height: 8rem;
-    padding: 2rem;
-    border-radius: 50%;
-    background-color: #fff;
-    color: #5138ee;
-  }
-`;
+    // })}
+    // </div>
+  )
+}
 export default Services;
