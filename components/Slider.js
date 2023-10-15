@@ -53,7 +53,7 @@ function Slider() {
   };
 
   return (
-    <div className=' h-[55vh] lg:h-[70vh] w-full m-auto pb-10 relative group'>
+    <div className=' h-[55vh] lg:h-[70vh] w-full m-auto pb-10 pt-2 relative group'>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='bg-no-repeat object-fill w-full h-full bg-center md:bg-auto bg-cover duration-500'
