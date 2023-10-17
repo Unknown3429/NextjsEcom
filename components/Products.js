@@ -53,8 +53,13 @@ const Collection = ({ category }) => {
     // console.log(product[0].img);
     return (
         <>
-            <h1 className="sm:text-3xl text-xl font-medium title-font mb-2 text-gray-900">{category.toUpperCase()} Collection</h1>
-            <Carousel cols={2} rows={1} gap={8} loop
+            <div class="text-center my-10">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2">{category.toUpperCase()}</h1>
+                <div class="flex mt-6 justify-center">
+                    <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
+                </div>
+            </div>
+            <Carousel cols={4} rows={1} gap={8} loop
                 mobileBreakpoint={670}
                 responsiveLayout={[
                     {
@@ -70,7 +75,7 @@ const Collection = ({ category }) => {
                     return (
                         <Carousel.Item key={i} >
                             <div className="my-5" key={i}>
-                                <img className="h-[55vh]" width="90%" src={item?.img} />
+                                <img className="md:h-[35vh] lg:h-[40vh] h-[60vh]" width="90%" src={item?.img} />
                             </div>
                         </Carousel.Item>
                     )

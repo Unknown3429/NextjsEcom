@@ -1,85 +1,60 @@
-import { useEffect, useState } from "react";
-import Skeleton from 'react-loading-skeleton'
-import Carousel from 'react-grid-carousel'
-import 'react-loading-skeleton/dist/skeleton.css'
+import React from 'react'
 
-
-const Services = () => {
-  const [image, setImage] = useState([])
-
-  const handleimg = async () => {
-    const img = await fetch("http://localhost:3000/api/collection");
-    let res = await img.json()
-    setImage(res)
-  }
-
-  useEffect(() => {
-    handleimg()
-  }, [])
-  if (!image) { return }
-  let img = image?.img
-  console.log(img);
-
-  if (!img) {
+const Service = () => {
     return (
-      <div className="relative flex rounded-xl bg-clip-border h-[50vh]">
-        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-            <Skeleton className="object-cover object-center w-full h-[50vh]" />
-          </div>
+        <div>
+            <section class="text-gray-600 body-font">
+                <div class="container px-5 py-24 mx-auto">
+                    <div class="text-center mb-20">
+                        <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">Services</h1>
+                        <div class="flex mt-6 justify-center">
+                            <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6">
+                        <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
+                            <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Shooting Stars</h2>
+                                <p class="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
+                        
+                            </div>
+                        </div>
+                        <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
+                            <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                                    <circle cx="6" cy="6" r="3"></circle>
+                                    <circle cx="6" cy="18" r="3"></circle>
+                                    <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">The Catalyzer</h2>
+                                <p class="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
+                                
+                            </div>
+                        </div>
+                        <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
+                            <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Neptune</h2>
+                                <p class="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-            <Skeleton className="object-cover object-center w-full h-[50vh]" />
-          </div>
-        </div>
-        <div className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-          <div className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-            <Skeleton className="object-cover object-center w-full h-[50vh]" />
-          </div>
-        </div>
-
-      </div>
     )
-  }
-
-
-  return (
-    <Carousel cols={2} rows={1} gap={8} loop
-      mobileBreakpoint={670}
-      responsiveLayout={[
-        {
-          breakpoint: 1200,
-          cols: 3
-        },
-        {
-          breakpoint: 990,
-          cols: 2
-        }
-      ]}>
-      {img && img.map((item, i) => {
-        return (
-          <Carousel.Item key={i} >
-            <div className="mb-5" key={i}>
-              <img className="h-[55vh]" width="90%" src={item} />
-            </div>
-          </Carousel.Item>
-        )
-      })}
-    </Carousel>
-    // <div className="relative flex rounded-xl bg-clip-border h-[50vh]">
-    // {img && img.map((item) => {
-    //   return <div key={item} className="relative mx-4 flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-    //     <div key={item} className="relative mx-4 my-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-    //       <img
-    //         src={item}
-    //         className="object-cover object-center h-full w-full "
-    //       />
-    //     </div>
-    //   </div>
-
-    // })}
-    // </div>
-  )
 }
-export default Services;
+
+export default Service
