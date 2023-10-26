@@ -1,26 +1,26 @@
 import Link from 'next/link'
 import mongoose from 'mongoose'
+import Product from '../model/Product'
 import Fade from 'react-reveal/Fade';
 
 
+const Caps = ({ products }) => {
 
-import Product from '../model/Product'
 
-const Hoodies = ({ products }) => {
-  // console.log(products);
   return (
     <div>
       <section className="text-gray-600 body-font ">
-        <div className="container px-5 py-16 mx-auto">
-          <h2 className='text-center mb-10 text-2xl text-black'>Hoodies Collection</h2>
-          <div className="flex flex-wrap justify-center">
-            {Object.keys(products)?.length === 0 && <p>Curently hoodies is Not available new stock comming soon Stay Tuned</p>}
+        <div className="container px-5 py-10 mx-auto">
+          <h2 className='text-center mb-10 text-2xl text-black'>Caps-collection</h2>
+          <div className="flex flex-wrap  justify-center">
             {Object.keys(products)?.map((item) => {
               return <Fade key={products[item]._id} bottom>
-                <div key={products[item]._id} className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 ">
+                <div className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 ">
+
                   <Link href={`/products/${products[item]?.slug}`} className="  rounded overflow-hidden ">
-                    <img alt="ecommerce" className=" m-auto w-[86vw] object-cover md:h-{45vh} md:w-[100%]" src={products[item]?.img} />
+                    <img alt="ecommerce" className="m-auto w-[86vw] object-cover md:h-[45vh] md:w-[100%]" src={products[item]?.img} />
                   </Link>
+
                   <Link href={`/products/${products[item]?.slug}`}>
                     <div className="mt-4">
                       <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{products[item]?.category}</h3>
@@ -35,11 +35,11 @@ const Hoodies = ({ products }) => {
                       </div>
                       <div className="mt-3">
                         {products[item]?.color.includes("red") && <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("white") && <button className="border-2 border-gray-300 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none"></button>}
                         {products[item]?.color.includes("blue") && <button className="border-2 border-gray-300 ml-1 bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                         {products[item]?.color.includes("black") && <button className="border-2 border-gray-300 ml-1 bg-black rounded-full w-6 h-6 focus:outline-none"></button>}
                         {products[item]?.color.includes("indigo") && <button className="border-2 border-gray-300 ml-1 bg-indigo-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                         {products[item]?.color.includes("green") && <button className="border-2 border-gray-300 ml-1 bg-green-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                        {products[item]?.color.includes("white") && <button className="border-2 border-gray-300 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none"></button>}
 
                       </div>
                     </div>
@@ -60,31 +60,35 @@ export const getServerSideProps = async (context) => {
     await mongoose.connect(process.env.MONGO_URI)
   }
 
-  let products = await Product.find({ category: "hoodies" })
-  let hoodies = {};
+  let products = await Product.find({ category: "caps" })
+  let caps = {};
   for (let item of products) {
-    if (item?.title in hoodies) {
-      if (!hoodies[item.title].color.includes(item?.color) && item?.availableQty > 0) {
-        hoodies[item.title]?.color?.push(item?.color)
+    if (item?.title in caps) {
+      if (!caps[item.title].color.includes(item?.color) && item?.availableQty > 0) {
+        caps[item.title]?.color?.push(item?.color)
       }
 
-      if (!hoodies[item.title].size.includes(item?.size) && item?.availableQty > 0) {
-        hoodies[item.title].size.push(item?.size)
+      if (!caps[item.title].size.includes(item?.size) && item?.availableQty > 0) {
+        caps[item.title].size.push(item?.size)
       }
     }
 
     else {
-      hoodies[item?.title] = JSON.parse(JSON.stringify(item))
+      caps[item?.title] = JSON.parse(JSON.stringify(item))
       if (item?.availableQty > 0) {
-        hoodies[item.title].color = [item.color];
-        hoodies[item.title].size = [item.size];
+        caps[item.title].color = [item.color];
+        caps[item.title].size = [item.size];
+      }
+      else {
+        caps[item.title].color = [];
+        caps[item.title].size = [];
       }
     }
 
   }
   return {
-    props: { products: JSON.parse(JSON.stringify(hoodies)) }
+    props: { products: JSON.parse(JSON.stringify(caps)) }
   }
 }
 
-export default Hoodies
+export default Caps

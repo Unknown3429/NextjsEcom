@@ -67,8 +67,8 @@ const Navbar = ({ key1, logout, user }) => {
                         <Link href={"/"} className="mr-5  hover:text-white">Home</Link>
                         <Link href={"/tShirts"} className="mr-5 hover:text-white">T-shirts</Link>
                         <Link href={"/hoodies"} className="mr-5 hover:text-white">Hoodies</Link>
-                        <Link href={"/mugs"} className="mr-5 hover:text-white">Mugs</Link>
-                        <Link href={"/mousepad"} className="mr-5 hover:text-white">Mouse Pad</Link>
+                        <Link href={"/watches"} className="mr-5 hover:text-white">Watches</Link>
+                        <Link href={"/caps"} className="mr-5 hover:text-white">Caps</Link>
                     </nav>
 
                     {user?.value &&
@@ -125,13 +125,13 @@ const Navbar = ({ key1, logout, user }) => {
                                     </Link>
                                 </li>
                                 <li className="my-px">
-                                    <Link href={"/mugs"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
-                                        <span className="ml-3">Mugs</span>
+                                    <Link href={"/watches"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+                                        <span className="ml-3">Watches</span>
                                     </Link>
                                 </li>
                                 <li className="my-px">
-                                    <Link href={"/mousepad"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
-                                        <span className="ml-3">Mouse Pad</span>
+                                    <Link href={"/caps"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+                                        <span className="ml-3">Caps</span>
                                     </Link>
                                 </li>
                             </ul>

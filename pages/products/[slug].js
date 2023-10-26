@@ -14,13 +14,7 @@ import Product from '../../model/Product';
 const Slug = ({ variant, product, errorCode }) => {
     const { addToCart2, cart2, buyNow } = useCartContext()
     const router = useRouter();
-    // let item
-    // if (typeof window !== 'undefined') {
-    //     // Perform localStorage action
-    //     item = JSON.parse(localStorage.getItem('cart'))
-    // }
-    // let cart3 = Object.keys(item)
-    // console.log(cart3);
+
 
     const addcolor = product?.color
 
@@ -28,7 +22,7 @@ const Slug = ({ variant, product, errorCode }) => {
     const [pin, setPin] = useState();
     const [service, setService] = useState()
     const handlePin = async () => {
-        const pins = await fetch("http://localhost:3000/api/pin");
+        const pins = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/pin`);
         const pinJson = await pins.json()
         if (Object.keys(pinJson).includes((pin))) {
             setService(true)
@@ -66,7 +60,7 @@ const Slug = ({ variant, product, errorCode }) => {
     const [size, setSize] = useState(product?.size);
 
     const refreshVariant = (newSize, newColor) => {
-        let url = `http://localhost:3000/products/${variant[newColor][newSize]['slug']}`;
+        let url = `${process.env.NEXT_PUBLIC_URL}/products/${variant[newColor][newSize]['slug']}`;
         window.location = url
 
     }
@@ -183,7 +177,7 @@ const Slug = ({ variant, product, errorCode }) => {
                             <div className="relative sm:w-auto xl:mr-4 lg:mr-2 sm:mr-4 mr-2  ">
                                 <input type="text" onChange={changePin} placeholder='Enter Your Pin Code' id="footer-field" name="footer-field" className="w-full rounded border bg-opacity-40 border-gray-700 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 focus:border-indigo-500 text-base outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             </div>
-                            <button onClick={handlePin} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Check Pin</button>
+                            <button onClick={handlePin} className="mt-3 sm:mt-0 lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Check Pin</button>
                         </div>
                         {!service && service != null && <div className="text-red-700 mt-4">
                             Sorry! this pin code is not serviceable
@@ -236,7 +230,6 @@ export const getServerSideProps = async (context) => {
             colorSizeSlug[item.color] = {};
             colorSizeSlug[item.color][item.size] = { slug: item?.slug }
         }
-        // console.log(product);
     }
 
     return {

@@ -73,7 +73,7 @@ const checkout = ({ cart, subTotal, user }) => {
 
   //for getting pincode 
   const getpin = async (pin) => {
-    const pins = await fetch("http://localhost:3000/api/pin");
+    const pins = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/pin`);
     const pinJson = await pins.json()
 
     if (Object.keys(pinJson).includes(pin)) {
@@ -95,7 +95,7 @@ const checkout = ({ cart, subTotal, user }) => {
   // for geting all values of user
   const fetchUser = async (token) => {
     let body = { token, address, phone, pincode }
-    const data = await fetch("http://localhost:3000/api/getUser", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getUser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -113,7 +113,7 @@ const checkout = ({ cart, subTotal, user }) => {
   // for calling razorPay api 
   const handlePay = async (amount) => {
     const body = { email, phone, address, subTotal: amount, cart, city, state, pincode, phone }
-    const data = await fetch("http://localhost:3000/api/razorpay", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/razorpay`, {
       method: 'POST',
       body: JSON.stringify(body)
       // Adding headers to the request
@@ -130,7 +130,7 @@ const checkout = ({ cart, subTotal, user }) => {
       "redirect": true,
       // "image": "https://example.com/your_logo",
       // "order_id": data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      "callback_url": `http://localhost:3000/api/afterPayment`,
+      "callback_url": `${process.env.NEXT_PUBLIC_URL}/api/afterPayment`,
       "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         "name": "Gaurav Kumar", //your customer's name
       },
