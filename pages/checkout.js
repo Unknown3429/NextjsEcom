@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import Script from 'next/script';
 import { useCartContext } from '../context/cartContext';
+import Head from 'next/head';
 
 const checkout = ({ cart, subTotal, user }) => {
   const { removeFromCart, addToCart2, clearCart } = useCartContext();
@@ -144,6 +145,9 @@ const checkout = ({ cart, subTotal, user }) => {
   }
   return isClient && <div>
     <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+    <Head>
+      <title>Wear The Comfort-Caps Collection</title>
+    </Head>
     <section className="text-gray-600 body-font relative">
       <div className="container px-5 py-16 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">

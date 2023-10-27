@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
@@ -162,6 +163,9 @@ const myaccount = ({ user }) => {
     }
     return (
         <section className="text-gray-600 body-font relative">
+            <Head>
+                <title>Wear The Comfort-Myacoount</title>
+            </Head>
             <ToastContainer
                 position="bottom-center"
                 autoClose={1000}

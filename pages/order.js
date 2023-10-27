@@ -4,12 +4,13 @@ import mongoose from 'mongoose';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useCartContext } from '../context/cartContext';
+import Head from 'next/head';
 
 
 
-const MyOrder = ({ order}) => {
+const MyOrder = ({ order }) => {
     const router = useRouter();
-    const {clearCart} = useCartContext()
+    const { clearCart } = useCartContext()
     // console.log(order);
     const products = order.products
     useEffect(() => {
@@ -19,9 +20,12 @@ const MyOrder = ({ order}) => {
             console.log("cart is clear");
         }
     }, [])
-    
+
     return (
         <section className="text-gray-600 body-font overflow-hidden md:h-[90vh]">
+            <Head>
+                <title>Wear The Comfort-Order</title>
+            </Head>
             <div className="container px-5 py-24 mx-auto">
                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
                     <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">

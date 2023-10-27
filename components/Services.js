@@ -1,15 +1,15 @@
 import React from 'react'
 import Fade from 'react-reveal/Fade';
 
-const Service = () => {
+const Service = ({ mode }) => {
     return (
         <div>
             <Fade bottom>
-                <section className="text-gray-600 body-font">
+                <section className={mode ? "text-gray-300 body-font" : "text-gray-600 body-font"}>
                     <div className="container px-5 py-24 mx-auto">
                         <div className="text-center mb-20">
                             <Fade bottom cascade>
-                                <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">Services</h1>
+                                <h1 className={mode ? "text-[#e9e7ee] sm:text-3xl text-2xl font-medium title-font mb-4" : "sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4"}>Services</h1>
                             </Fade>
                             <div className="flex mt-6 justify-center">
                                 <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
@@ -24,7 +24,7 @@ const Service = () => {
                                 </div>
                                 <div className="flex-grow">
                                     <Fade bottom cascade>
-                                        <h2 className="text-gray-900 text-lg title-font font-medium mb-3">Shooting Stars</h2>
+                                        <h2 className={mode ? "text-[#e9e7ee] text-lg title-font font-medium mb-3" : "text-gray-900 text-lg title-font font-medium mb-3"}>Shooting Stars</h2>
                                         <p className="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
                                     </Fade>
                                 </div>
@@ -39,7 +39,7 @@ const Service = () => {
                                 </div>
                                 <div className="flex-grow">
                                     <Fade bottom cascade>
-                                        <h2 className="text-gray-900 text-lg title-font font-medium mb-3">The Catalyzer</h2>
+                                        <h2 className={mode ? "text-[#e9e7ee] text-lg title-font font-medium mb-3" : "text-gray-900 text-lg title-font font-medium mb-3"}>The Catalyzer</h2>
                                         <p className="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
                                     </Fade>
 
@@ -54,7 +54,7 @@ const Service = () => {
                                 </div>
                                 <div className="flex-grow">
                                     <Fade bottom cascade>
-                                        <h2 className="text-gray-900 text-lg title-font font-medium mb-3">Neptune</h2>
+                                        <h2 className={mode ? "text-[#e9e7ee] text-lg title-font font-medium mb-3" : "text-gray-900 text-lg title-font font-medium mb-3"}>Neptune</h2>
                                         <p className="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
                                     </Fade>
                                 </div>

@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Error from 'next/error'
 
 import Product from '../../model/Product';
+import Head from 'next/head';
 
 const Slug = ({ variant, product, errorCode }) => {
     const { addToCart2, cart2, buyNow } = useCartContext()
@@ -70,6 +71,9 @@ const Slug = ({ variant, product, errorCode }) => {
     }
 
     return <>
+        <Head>
+            <title>Wear The Comfort-{slug}</title>
+        </Head>
         <section className="text-gray-600 body-font overflow-hidden">
             <ToastContainer
                 position="bottom-center"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 
 const MyOrders = ({ }) => {
@@ -37,6 +38,9 @@ const MyOrders = ({ }) => {
   return (
     <>
       <div className="relative overflow-x-auto min-h-[90vh]">
+      <Head>
+        <title>Wear The Comfort-Oreders</title>
+      </Head>
         <h1 className='text-center text-2xl font-semibold py-10'>My order</h1>
         <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b dark:border-gray-300 dark:bg-white dark:text-gray-400">

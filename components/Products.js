@@ -3,15 +3,15 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Fade from 'react-reveal/Fade';
 import Carousel from 'react-grid-carousel'
+import Link from 'next/link'
 
 
-const Collection = ({ category }) => {
+const Collection = ({ category, mode }) => {
 
     const [product, setProduct] = useState([])
     const [sk, setSk] = useState(false)
     let p = []
     let c = []
-
     const handleimg = async () => {
         const img = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/getCollection`, {
             method: 'POST',
@@ -72,13 +72,13 @@ const Collection = ({ category }) => {
     return (
         <>
             <div className="text-center my-10">
-                <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2">{category.toUpperCase()}</h1>
+                <h1 className={mode ? `sm:text-3xl text-2xl font-medium title-font text-[#e9e7ee] mb-2` : "sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2"}>{category.toUpperCase()}</h1>
                 <div className="flex mt-6 justify-center">
                     <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
                 </div>
             </div>
             <Fade bottom>
-                <Carousel cols={4} rows={1} gap={5} loop
+                <Carousel cols={4} rows={1} loop
                     mobileBreakpoint={670}
                     responsiveLayout={[
                         {
@@ -93,9 +93,11 @@ const Collection = ({ category }) => {
                     {product && product?.map((item, i) => {
                         return (
                             <Carousel.Item key={i} >
-                                <div className="my-5" key={i}>
-                                    <img className="md:h-[35vh] lg:h-[40vh] h-[45vh]" width="90%" src={item?.img} />
-                                </div>
+                                <Link href={`/products/${item?.slug}`} className="  rounded overflow-hidden ">
+                                    <div className="w-full my-5 bg-white" key={i}>
+                                        <img className="md:h-[35vh] max-w-xs transition duration-300 ease-in-out hover:scale-110 cursor-pointer w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+                                    </div>
+                                </Link>
                             </Carousel.Item>
                         )
                     })}

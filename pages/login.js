@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -86,6 +87,9 @@ const Login = () => {
 
   return (
     <section className="bg-white dark:bg-gray-800">
+      <Head>
+        <title>Wear The Comfort-Login</title>
+      </Head>
       <ToastContainer
         position="bottom-center"
         autoClose={2000}

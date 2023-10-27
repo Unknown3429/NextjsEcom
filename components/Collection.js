@@ -3,9 +3,10 @@ import Skeleton from 'react-loading-skeleton'
 import Carousel from 'react-grid-carousel'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Fade from 'react-reveal/Fade';
+import Link from 'next/link'
 
 
-const Services = () => {
+const Services = ({ mode }) => {
   const [image, setImage] = useState([])
 
   const handleimg = async () => {
@@ -61,7 +62,7 @@ const Services = () => {
 
   return (
     <Fade bottom>
-      <Carousel cols={4} rows={1} gap={5} loop
+      <Carousel cols={4} rows={1} loop
         mobileBreakpoint={670}
         responsiveLayout={[
           {
@@ -73,17 +74,20 @@ const Services = () => {
             cols: 2
           }
         ]}>
-        {img && img.map((item, i) => {
+        {img && img?.map((item, i) => {
+          const links = item?.category.toLowerCase()
           return (
             <Carousel.Item key={i} >
-              <div className="mb-5" key={i}>
-                <img className="md:h-[35vh] lg:h-[40vh] h-[45vh]" width="90%" src={item} />
-              </div>
+              <Link href={`/${links}`}>
+                <div className="mb-5 w-full bg-white" key={i}>
+                  <img className="max-w-xs transition duration-300 ease-in-out hover:scale-110 cursor-pointer md:h-[35vh] w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+                </div>
+              </Link>
             </Carousel.Item>
           )
         })}
       </Carousel>
-    </Fade>
+    </Fade >
   )
 }
 export default Services;

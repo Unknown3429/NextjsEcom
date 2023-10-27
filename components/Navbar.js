@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 
 
-const Navbar = ({ key1, logout, user }) => {
+const Navbar = ({ key1, logout, user, setMode, mode }) => {
     const router = useRouter()
     useEffect(() => {
         setHburger(false)
@@ -39,7 +39,7 @@ const Navbar = ({ key1, logout, user }) => {
                     </Link>
 
                     <button
-                        className="flex flex-col ml-28 mb-3 h-12 w-12 justify-center items-center group md:hidden"
+                        className="flex flex-col mr-2 ml-24 mb-3 h-12 w-12 justify-center items-center group md:hidden"
                         onClick={() => {
                             setIsOpen(!isOpen)
                             setHburger(!hburger)
@@ -65,11 +65,18 @@ const Navbar = ({ key1, logout, user }) => {
 
                     <nav className="hidden md:ml-auto md:mr-auto md:flex flex-wrap items-center text-lg justify-center">
                         <Link href={"/"} className="mr-5  hover:text-white">Home</Link>
-                        <Link href={"/tShirts"} className="mr-5 hover:text-white">T-shirts</Link>
+                        <Link href={"/tshirts"} className="mr-5 hover:text-white">T-shirts</Link>
                         <Link href={"/hoodies"} className="mr-5 hover:text-white">Hoodies</Link>
                         <Link href={"/watches"} className="mr-5 hover:text-white">Watches</Link>
                         <Link href={"/caps"} className="mr-5 hover:text-white">Caps</Link>
                     </nav>
+
+                    <button onClick={() => {
+                        setMode(!mode)
+                    }}
+                        className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0">
+                        <BsMoonStarsFill className='hover:text-white' />
+                    </button>
 
                     {user?.value &&
                         <button onMouseOver={() => setToggle(true)} onMouseLeave={() => setToggle(false)} className="hidden md:inline-flex items-center border-0 py-1 px-2 focus:outline-none  rounded text-4xl mt-4 md:mt-0"><BiUserCircle className='hover:text-white' />
@@ -90,12 +97,11 @@ const Navbar = ({ key1, logout, user }) => {
 
                     {!user?.value &&
                         <Link href={"/login"}>
-                            <button className="px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
+                            <button className="px-4 py-3 md:py-2 text-sm mb-3 md:mb-1 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50">
                                 Login
                             </button>
                         </Link>
                     }
-
 
                     <Link href={"/cart"}>
                         <button className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0"><FiShoppingCart className='hover:text-white' />
@@ -115,8 +121,8 @@ const Navbar = ({ key1, logout, user }) => {
                                     </Link>
                                 </li>
                                 <li className="my-px">
-                                    <Link href={"/tShirts"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
-                                        <span className="ml-3">TShirts</span>
+                                    <Link href={"/tshirts"} className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+                                        <span className="ml-3">tshirts</span>
                                     </Link>
                                 </li>
                                 <li className="my-px">
@@ -160,8 +166,11 @@ const Navbar = ({ key1, logout, user }) => {
                         <div className="tooltip-arrow" data-popper-arrow></div>
                     </div>
                     <button data-tooltip-target="tooltip-wallet" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                        <BsMoonStarsFill className='w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500' />
-                        <span className="sr-only">Wallet</span>
+                        <BsMoonStarsFill onClick={() => {
+                            setMode(!mode)
+                        }}
+                            className='w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500' />
+                        <span className="sr-only">mode</span>
                     </button>
                     <div id="tooltip-wallet" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         mode

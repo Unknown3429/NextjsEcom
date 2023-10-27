@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps }) => {
     const [cart, setCart] = useState({});
     const [key, setKey] = useState(0)
     const [user, setUser] = useState({ value: null });
-
+    const [mode, setMode] = useState(false)
 
     // for add item in cart 
     // const addToCart = (itemCode, qty, price, name, size, variant) => {
@@ -121,8 +121,8 @@ const MyApp = ({ Component, pageProps }) => {
                         waitingTime={500}
                         progress={progress}
                     />
-                    <Navbar logout={logout} key1={key} user={user} />
-                    <Component user={user} {...pageProps} />
+                    <Navbar mode={mode} setMode={setMode} logout={logout} key1={key} user={user} />
+                    <Component mode={mode} user={user} {...pageProps} />
                     <Footer />
                 </SkeletonTheme>
             </CartProvider>

@@ -7,8 +7,8 @@ const handler = async (req, res) => {
     let img = []
     for (let i = 0; i < category.length; i++) {
         let product = await Product.findOne({ category: category[i] });
-        img.push(product.img);
+        img.push(product);
     }
-    res.status(200).json({ category, img })
+    res.status(200).json({ img })
 }
 export default connectDb(handler);

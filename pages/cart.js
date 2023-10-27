@@ -5,11 +5,12 @@ import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import Image from 'next/image';
 
 import { useCartContext } from '../context/cartContext';
+import Head from 'next/head';
 
 
 
 
-const cart = () => {
+const cart = ({ mode }) => {
   const { removeFromCart, addToCart2, clearCart } = useCartContext();
   const [isClient, setIsClient] = useState(false)
 
@@ -31,16 +32,19 @@ const cart = () => {
   let cart2 = item
 
   if (cart2 && Object.keys(cart2).length <= 0) {
-    return isClient && <div className='flex flex-col min-h-screen text-center items-center pt-20 md:pt-32 '>
+    return isClient && <div className={mode ? 'flex bg-[#232D3F] flex-col min-h-screen text-center items-center pt-20 md:pt-32' : "flex flex-col min-h-screen text-center items-center pt-20 md:pt-32 "}>
       <Image src={'/notFound.png'}
         width={500}
         height={500}
         alt="No Products Added In Cart" />
-      <h1 className='font-semibold'>Please Add Products In Cart</h1>
+      <h1 className={mode ? 'text-[#e9e7ee] font-semibold' : "font-semibold"}>Please Add Products In Cart</h1>
     </div>
 
   }
   return isClient && <div className='mb-20 min-h-screen' key={useCartContext} >
+    <Head>
+      <title>Wear The Comfort-Your Cart</title>
+    </Head>
     <div className="contain md:px-5 mt-10 ">
       <div className="p-2 w-full row">
         <div className="cart_heading grid grid-five-column  md:ml-0">

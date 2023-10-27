@@ -7,23 +7,22 @@ import Service from '../components/Services';
 // import Services from '../components/services';
 
 
-export default function Home() {
+export default function Home({ mode }) {
   return (
     <div >
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Wear The Comfort</title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
-
       <div className="main">
-        <Slider />
+        <Slider mode={mode} />
       </div>
 
-      <section className="text-gray-600 body-font min-h-screen ">
+      <section className={mode ? `text-gray-600 body-font min-h-screen bg-[#232D3F]` : `text-gray-600 body-font min-h-screen`}>
         <div className="container px-5 pt-10 mx-auto">
           <div class="text-center my-10">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2">Collections</h1>
+            <h1 class={mode ? `sm:text-3xl text-2xl font-medium title-font text-[#e9e7ee]  mb-2` : `sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2`}>Collections</h1>
             <div class="flex mt-6 justify-center">
               <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
             </div>
@@ -34,15 +33,20 @@ export default function Home() {
           </div>
 
           <div>
-            <Products category={"Tshirts"} />
+            <Products category={"Tshirts"} mode={mode} />
           </div>
 
           <div>
-            <Products category={"hoodies"} />
+            <Products category={"caps"} mode={mode} />
           </div>
 
           <div>
-            <Service />
+            <Products category={"hoodies"} mode={mode} />
+          </div>
+
+
+          <div>
+            <Service mode={mode} />
           </div>
         </div>
       </section>

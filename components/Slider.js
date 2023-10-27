@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 
-function Slider() {
+function Slider({ mode }) {
 
   const slides = [
     'https://m.media-amazon.com/images/I/7114uGhcy0L._UX679_.jpg',
@@ -51,7 +51,7 @@ function Slider() {
         className="mySwiper"
       >
         {slides?.map((src) => {
-          return <SwiperSlide className='' key={src}><img className='object-cover h-[45vh] m-auto mb-10' src={src} /></SwiperSlide>
+          return <SwiperSlide className={mode ? 'bg-[#232D3F]' : ""} key={src}><img className='object-cover h-[45vh] m-auto mb-10' src={src} /></SwiperSlide>
         })}
       </Swiper>
     </>
