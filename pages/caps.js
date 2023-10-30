@@ -18,6 +18,8 @@ const Caps = ({ products, mode }) => {
           <h2 className={mode ? 'text-center mb-10 text-2xl text-[#e9e7ee]' : "text-center mb-10 text-2xl text-black"}>Caps-collection</h2>
           <div className="flex flex-wrap  justify-center">
             {Object.keys(products)?.map((item) => {
+              const pureColor = products[item]?.color
+
               return <Fade key={products[item]._id} bottom>
                 <div className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 ">
 
@@ -38,13 +40,15 @@ const Caps = ({ products, mode }) => {
                         {products[item]?.size.includes("XXL") && <span className='border border-gray-300 px-1 mx-1'>XXL</span>}
                       </div>
                       <div className="mt-3">
-                        {products[item]?.color.includes("red") && <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("blue") && <button className="border-2 border-gray-300 ml-1 bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("black") && <button className="border-2 border-gray-300 ml-1 bg-black rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("indigo") && <button className="border-2 border-gray-300 ml-1 bg-indigo-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("green") && <button className="border-2 border-gray-300 ml-1 bg-green-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("white") && <button className="border-2 border-gray-300 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none"></button>}
-
+                        {pureColor?.map((color) => {
+                          if (color == "black" || color == "white") {
+                            return <button key={color} className={`border-2 border-gray-300 ml-1 bg-${color} rounded-full w-6 h-6 focus:outline-none`
+                            }></button>
+                          } else {
+                            return <button key={color} className={`border-2 border-gray-300 ml-1 bg-${color}-500 rounded-full w-6 h-6 focus:outline-none`
+                            }></button>
+                          }
+                        })}
                       </div>
                     </div>
                   </Link>

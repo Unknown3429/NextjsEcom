@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import Image from 'next/image';
 
 import { useCartContext } from '../context/cartContext';
@@ -90,8 +91,9 @@ const cart = ({ mode }) => {
                   </div>
                 </div>
 
-                <div className="ml-8 md:ml-0">
+                <div className="ml-8 md:ml-0 flex flex-col justify-center items-center">
                   <p>₹{cart2[k].subt}</p>
+                  <AiFillDelete onClick={() => { removeFromCart(k, 0, cart2[k].price, cart2[k].name, cart2[k].size, cart2[k].variant) }} className='mt-2 cursor-pointer text-red-700' />
                 </div>
 
               </div>

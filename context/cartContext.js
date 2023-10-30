@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from '../reducers/cartReducer'
 
-const CartContext = createContext();
 
+const CartContext = createContext();
 
 
 const intialState = {
@@ -18,6 +18,7 @@ const CartProvider = ({ children }) => {
     const addToCart2 = (itemCode, qty, price, name, size, variant) => {
         // console.log(itemCode);
         dispatch({ type: "ADD_TO_CART", payload: [itemCode, qty, price, name, size, variant] })
+     
     }
 
     // For Clear Cart Item 

@@ -79,8 +79,9 @@ const Services = ({ mode }) => {
           return (
             <Carousel.Item key={i} >
               <Link href={`/${links}`}>
-                <div className="mb-5 w-full bg-white" key={i}>
-                  <img className="max-w-xs transition duration-300 ease-in-out hover:scale-110 cursor-pointer md:h-[35vh] w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+                <div className="mb-5 w-full bg-white max-w-xs shadow-md transition duration-300 ease-in-out hover:scale-105" key={i}>
+                  <img className="cursor-pointer md:h-[35vh] w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+                  <span className="relative pb-5 flex justify-center align-middle text-2xl mt-2 font-bold text-black">{item?.category.toUpperCase()}</span>
                 </div>
               </Link>
             </Carousel.Item>

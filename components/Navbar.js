@@ -5,9 +5,11 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { BiUserCircle } from "react-icons/bi"
 import { AiFillFolderAdd } from "react-icons/ai"
 import { RiAccountPinBoxFill } from "react-icons/ri"
-import { BsMoonStarsFill } from "react-icons/bs"
+import { BsMoonStarsFill, BsSearch } from "react-icons/bs"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Searchbar from './Searchbar';
+import Fade from 'react-reveal/Fade';
 
 
 
@@ -22,20 +24,21 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
     const [toggle, setToggle] = useState(null)
     const [hburger, setHburger] = useState(false)
     const [isOpen, setIsOpen] = useState(false);
+    const [search, setSearch] = useState(false)
     const genericHamburgerLine = `h-1 w-7 my-1 rounded-full bg-white transition ease transform duration-300`;
 
 
 
     return (
         <>
-
-            <nav key={key1} className="text-gray-400 bg-gray-900 body-font sticky top-0 z-10">
+            <nav key={key1} className="text-gray-400 bg-gray-900 body-font sticky top-0 z-10 ">
                 <div className="container mx-auto flex py-5 pl-5 justify-between flex-row items-center">
                     <Link href={"/"} className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </svg>
-                        <span className="ml-3 text-xl">NextEcom</span>
+                        </svg> */}
+                        <img src="/main.png" alt="" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-12 h-12 text-white p-2 bg-indigo-400 rounded-full" viewBox="0 0 24 24" />
+                        <span className="ml-3 transition duration-300 ease-in-out text-xl hover:text-indigo-500"><span className='text-indigo-400'>WearThe</span>Comfort</span>
                     </Link>
 
                     <button
@@ -77,6 +80,15 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                         className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0">
                         <BsMoonStarsFill className='hover:text-white' />
                     </button>
+
+                    {/* {serach} */}
+                    <button onClick={() => {
+                        setSearch(!search)
+                    }}
+                        className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0">
+                        <BsSearch className='hover:text-white' />
+                    </button>
+
 
                     {user?.value &&
                         <button onMouseOver={() => setToggle(true)} onMouseLeave={() => setToggle(false)} className="hidden md:inline-flex items-center border-0 py-1 px-2 focus:outline-none  rounded text-4xl mt-4 md:mt-0"><BiUserCircle className='hover:text-white' />
@@ -148,7 +160,15 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
             </nav >
 
 
-
+            {/* Search bar  */}
+            <div className='transition ease transform duration-300 '>
+                {search ?
+                    <Fade top>
+                        <Searchbar className="transition ease-in-out transform duration-300 " setSearch={setSearch} />
+                    </Fade>
+                    :
+                    ""}
+            </div>
 
             {/* bottom navigation bar  */}
             < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-900 dark:border-gray-600" >
@@ -185,7 +205,9 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                     </button>
 
 
-                    <button data-tooltip-target="tooltip-settings" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                    <button onClick={() => {
+                        setSearch(!search)
+                    }} data-tooltip-target="tooltip-settings" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <FaMagnifyingGlass className='w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500' />
                         <span className="sr-only">Search</span>
                     </button>

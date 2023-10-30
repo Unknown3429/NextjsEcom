@@ -13,6 +13,8 @@ import Product from '../../model/Product';
 import Head from 'next/head';
 
 const Slug = ({ variant, product, errorCode }) => {
+    const [color, setColor] = useState(product?.color);
+    const [size, setSize] = useState(product?.size);
     const { addToCart2, cart2, buyNow } = useCartContext()
     const router = useRouter();
 
@@ -57,8 +59,7 @@ const Slug = ({ variant, product, errorCode }) => {
         setPin(e.target.value)
     }
 
-    const [color, setColor] = useState(product?.color);
-    const [size, setSize] = useState(product?.size);
+
 
     const refreshVariant = (newSize, newColor) => {
         let url = `${process.env.NEXT_PUBLIC_URL}/products/${variant[newColor][newSize]['slug']}`;
@@ -76,8 +77,8 @@ const Slug = ({ variant, product, errorCode }) => {
         </Head>
         <section className="text-gray-600 body-font overflow-hidden">
             <ToastContainer
-                position="bottom-center"
-                autoClose={2000}
+                position="top-left"
+                autoClose={1500}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -134,7 +135,15 @@ const Slug = ({ variant, product, errorCode }) => {
                         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                             <div className="flex">
                                 <span className="mr-3">Color</span>
-                                {Object.keys(variant)?.includes("white") && Object.keys(variant["white"])?.includes(size) && <button onClick={() => refreshVariant(size, "white")} className={`border-2 rounded-full w-6 h-6 focus:outline-none ${color === "white" ? "border-gray-500" : "border-gray-300 "}`}></button>}
+                                {Object.keys(variant).map((Icolor) => {
+                                    if (Icolor == "white" || Icolor == "black") {
+                                        return <button key={Icolor} onClick={() => refreshVariant(Object.keys(variant[Icolor])[0], Icolor)} className={`border-2 rounded-full bg-${Icolor} w-6 h-6 focus:outline-none ${color === Icolor ? "border-gray-500" : "border-gray-300 "}`}></button>
+                                    }
+                                    else {
+                                        return <button key={Icolor} onClick={() => refreshVariant(Object.keys(variant[Icolor])[0], Icolor)} className={`border-2 rounded-full bg-${Icolor}-500 w-6 h-6 focus:outline-none ${color === Icolor ? "border-gray-500" : "border-gray-300 "}`}></button>
+                                    }
+                                })}
+                                {/* {Object.keys(variant)?.includes("white") && Object.keys(variant["white"])?.includes(size) && <button onClick={() => refreshVariant(size, "white")} className={`border-2 rounded-full w-6 h-6 focus:outline-none ${color === "white" ? "border-gray-500" : "border-gray-300 "}`}></button>}
 
                                 {Object.keys(variant)?.includes("black") && Object.keys(variant['black'])?.includes(size) && <button onClick={() => refreshVariant(size, "black")} className={`border-2 rounded-full bg-black w-6 h-6 focus:outline-none ${color === "black" ? "border-gray-500" : "border-gray-300 "}`}></button>}
 
@@ -144,7 +153,7 @@ const Slug = ({ variant, product, errorCode }) => {
 
                                 {Object.keys(variant)?.includes("indigo") && Object.keys(variant['indigo'])?.includes(size) && <button onClick={() => refreshVariant(size, "indigo")} className={`border-2 rounded-full bg-indigo-500 w-6 h-6 focus:outline-none ${color === "indigo" ? "border-gray-500" : "border-gray-300 "}`}></button>}
 
-                                {Object.keys(variant)?.includes("green") && Object.keys(variant['green'])?.includes(size) && <button onClick={() => refreshVariant(size, "green")} className={`border-2 rounded-full bg-green-500 w-6 h-6 focus:outline-none ${color === "green" ? "border-gray-500" : "border-gray-300 "}`}></button>}
+                                {Object.keys(variant)?.includes("green") && Object.keys(variant['green'])?.includes(size) && <button onClick={() => refreshVariant(size, "green")} className={`border-2 rounded-full bg-green-500 w-6 h-6 focus:outline-none ${color === "green" ? "border-gray-500" : "border-gray-300 "}`}></button>} */}
 
                             </div>
                             <div className="flex ml-6 items-center">
@@ -197,8 +206,37 @@ const Slug = ({ variant, product, errorCode }) => {
 
                         <button onClick={() => { buyNow(slug, 1, product?.price, product?.title, product?.size, addcolor) }} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><AiTwotoneThunderbolt className='mt-1 mx-2' />Buy Now</button>
 
-                        <button onClick={() => { addToCart2(slug, 1, product?.price, product?.title, product?.size, addcolor) }} className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><BsFillCartFill className='mt-1 mx-2' />Add to Cart</button>
+                        <button
+                            onClick={() => {
+                                addToCart2(slug, 1, product?.price, product?.title, product?.size, addcolor);
+                                //addtocart notification 
+                                if (cart2) {
+                                    toast.success(`${product?.title} Added in cart`, {
+                                        position: "top-left",
+                                        autoClose: 1500,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                    });
+                                }
+                                else {
+                                    toast.error('Some error occured please try again', {
+                                        position: "top-left",
+                                        autoClose: 1500,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                    });
+                                }
+                            }}
 
+                            className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><BsFillCartFill className='mt-1 mx-2' />Add to Cart</button>
                     </div>
                 </div>
             </div>

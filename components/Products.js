@@ -94,8 +94,8 @@ const Collection = ({ category, mode }) => {
                         return (
                             <Carousel.Item key={i} >
                                 <Link href={`/products/${item?.slug}`} className="  rounded overflow-hidden ">
-                                    <div className="w-full my-5 bg-white" key={i}>
-                                        <img className="md:h-[35vh] max-w-xs transition duration-300 ease-in-out hover:scale-110 cursor-pointer w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+                                    <div className="w-full my-5 shadow-md bg-white max-w-xs transition duration-300 ease-in-out hover:scale-105 cursor-pointer" key={i}>
+                                        <img className="md:h-[35vh] w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
                                     </div>
                                 </Link>
                             </Carousel.Item>

@@ -6,19 +6,20 @@ import Head from 'next/head';
 
 
 const Tshirts = ({ products, mode }) => {
-
   return (
     <div>
       <Head>
         <title>Wear The Comfort-Tshirts Collection</title>
       </Head>
+
       <section className={mode ? `text-gray-300 body-font min-h-screen bg-[#232D3F]` : `text-gray-600 body-font min-h-screen`}>
         <div className="container px-5 py-16 mx-auto">
           <h2 className={mode ? 'text-center mb-10 text-2xl text-[#e9e7ee]' : "text-center mb-10 text-2xl text-black"}>T-Shirts-collection</h2>
-          <div className="flex flex-wrap  justify-center">
+          <div className="flex flex-wrap   justify-center">
             {Object.keys(products)?.map((item) => {
+              const pureColor = products[item]?.color
               return <Fade key={products[item]._id} bottom>
-                <div className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 ">
+                <div className=" lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 max-w-xs transition duration-300 ease-in-out hover:scale-110">
 
                   <Link href={`/products/${products[item]?.slug}`} className="  rounded overflow-hidden ">
                     <img alt="ecommerce" className="m-auto w-[86vw] object-cover md:h-[45vh] md:w-[100vw]" src={products[item]?.img} />
@@ -26,7 +27,7 @@ const Tshirts = ({ products, mode }) => {
 
                   <Link href={`/products/${products[item]?.slug}`}>
                     <div className="mt-4">
-                      <h3 className={mode?"text-gray-200 text-xs tracking-widest title-font mb-1":"text-gray-500 text-xs tracking-widest title-font mb-1"}>{products[item]?.category}</h3>
+                      <h3 className={mode ? "text-gray-200 text-xs tracking-widest title-font mb-1" : "text-gray-500 text-xs tracking-widest title-font mb-1"}>{products[item]?.category}</h3>
                       <h2 className={mode ? "text-[#e9e7ee] title-font text-lg font-medium" : "text-gray-900 title-font text-lg font-medium"}>{products[item]?.title}</h2>
                       <p className="mt-1">₹{products[item]?.price}</p>
                       <div className="mt-1">
@@ -37,13 +38,15 @@ const Tshirts = ({ products, mode }) => {
                         {products[item]?.size.includes("XXL") && <span className='border border-gray-300 px-1 mx-1'>XXL</span>}
                       </div>
                       <div className="mt-3">
-                        {products[item]?.color.includes("red") && <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("blue") && <button className="border-2 border-gray-300 ml-1 bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("black") && <button className="border-2 border-gray-300 ml-1 bg-black rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("indigo") && <button className="border-2 border-gray-300 ml-1 bg-indigo-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("green") && <button className="border-2 border-gray-300 ml-1 bg-green-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                        {products[item]?.color.includes("white") && <button className="border-2 border-gray-300 ml-1 bg-white rounded-full w-6 h-6 focus:outline-none"></button>}
-
+                        {pureColor?.map((color) => {
+                          if (color == "black" || color == "white") {
+                            return <button key={color} className={`border-2 border-gray-300 ml-1 bg-${color} rounded-full w-6 h-6 focus:outline-none`
+                            }></button>
+                          } else {
+                            return <button key={color} className={`border-2 border-gray-300 ml-1 bg-${color}-500 rounded-full w-6 h-6 focus:outline-none`
+                            }></button>
+                          }
+                        })}
                       </div>
                     </div>
                   </Link>
@@ -52,9 +55,9 @@ const Tshirts = ({ products, mode }) => {
             })}
 
           </div>
-        </div>
-      </section>
-    </div>
+        </div >
+      </section >
+    </div >
   )
 }
 

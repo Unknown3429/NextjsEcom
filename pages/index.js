@@ -1,9 +1,10 @@
 import Slider from '../components/Slider';
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Collection from '../components/Collection';
 import Products from '../components/Products';
 import Service from '../components/Services';
+// import Front from '../components/front';
 // import Services from '../components/services';
 
 
@@ -12,7 +13,7 @@ export default function Home({ mode }) {
     <div >
       <Head>
         <title>Wear The Comfort</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/main.png" />
       </Head>
 
       <div className="main">
@@ -22,7 +23,7 @@ export default function Home({ mode }) {
       <section className={mode ? `text-gray-600 body-font min-h-screen bg-[#232D3F]` : `text-gray-600 body-font min-h-screen`}>
         <div className="container px-5 pt-10 mx-auto">
           <div class="text-center my-10">
-            <h1 class={mode ? `sm:text-3xl text-2xl font-medium title-font text-[#e9e7ee]  mb-2` : `sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2`}>Collections</h1>
+            <h1 class={mode ? `sm:text-3xl text-2xl font-medium title-font text-[#e9e7ee]  mb-2` : `sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2`}>Our Collections</h1>
             <div class="flex mt-6 justify-center">
               <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
             </div>

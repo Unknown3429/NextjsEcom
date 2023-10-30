@@ -55,12 +55,15 @@ const cartReducer = (state, action) => {
 
             // checking item is availble in cart or not
             if (itemCode1 in localcart1) {
-                removeItem[itemCode1].qty = localcart1[itemCode1].qty - qty1
-                removeItem[itemCode1].subt = localcart1[itemCode1]?.price * (localcart1[itemCode1]?.qty)
-                localStorage.setItem("cart", JSON.stringify(removeItem))
+                if (removeItem[itemCode1].qty > 1) {
+                    removeItem[itemCode1].qty = localcart1[itemCode1].qty - qty1
+                    removeItem[itemCode1].subt = localcart1[itemCode1]?.price * (localcart1[itemCode1]?.qty)
+                    localStorage.setItem("cart", JSON.stringify(removeItem))
+                }
 
-                if (removeItem[itemCode1].qty <= 0) {
+                if (qty1 <= 0) {
                     delete removeItem[itemCode1];
+                    localStorage.setItem("cart", JSON.stringify(removeItem))
                 }
             }
 
