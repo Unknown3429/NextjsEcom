@@ -17,6 +17,17 @@ const MyApp = ({ Component, pageProps }) => {
     const [key, setKey] = useState(0)
     const [user, setUser] = useState({ value: null });
     const [mode, setMode] = useState(false)
+    const [image, setImage] = useState([])
+
+    const handleimg = async () => {
+      const img = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/collection`);
+      let res = await img.json()
+      setImage(res)
+    }
+  
+    useEffect(() => {
+      handleimg()
+    }, [])
 
     // for add item in cart 
     // const addToCart = (itemCode, qty, price, name, size, variant) => {
@@ -118,12 +129,12 @@ const MyApp = ({ Component, pageProps }) => {
                 <SkeletonTheme baseColor="#999DA0" highlightColor="#BEBDB8">
                     <LoadingBar
                         color='#6366f1'
-                        waitingTime={500}
+                        waitingTime={100}
                         progress={progress}
                     />
                     <Navbar mode={mode} setMode={setMode} logout={logout} key1={key} user={user} />
-                    <Component mode={mode} user={user} {...pageProps} />
-                    <Footer />
+                    <Component mode={mode} image={image} user={user} {...pageProps} />
+                    <Footer image={image} />
                 </SkeletonTheme>
             </CartProvider>
         </>

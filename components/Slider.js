@@ -1,7 +1,5 @@
-// import React, { useState } from 'react';
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Fade from 'react-reveal/Fade';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -51,7 +49,11 @@ function Slider({ mode }) {
         className="mySwiper"
       >
         {slides?.map((src) => {
-          return <SwiperSlide className={mode ? 'bg-[#232D3F]' : ""} key={src}><img className='object-cover h-[45vh] m-auto mb-10' src={src} /></SwiperSlide>
+          return <SwiperSlide className={mode ? 'bg-[#232D3F]' : ""} key={src}>
+            <Fade>
+              <img className='object-cover h-[45vh] m-auto mb-10' src={src} />
+            </Fade>
+          </SwiperSlide>
         })}
       </Swiper>
     </>

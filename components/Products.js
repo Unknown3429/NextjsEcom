@@ -5,10 +5,18 @@ import Fade from 'react-reveal/Fade';
 import Carousel from 'react-grid-carousel'
 import Link from 'next/link'
 
+import { CiHeart } from "react-icons/ci";
+import { IoCartOutline } from "react-icons/io5";
+
 
 const Collection = ({ category, mode }) => {
 
     const [product, setProduct] = useState([])
+
+    const hover = "flex shadow-md relative rounded-sm justify-around py-2 text-2xl z-50 mx-auto -mt-12 bg-white w-52"
+    const nHover = "hidden shadow-md relative rounded-sm justify-around py-2 text-2xl z-50 mx-auto -mt-12 bg-white w-52"
+    const [modal, setModal] = useState(nHover)
+
     const [sk, setSk] = useState(false)
     let p = []
     let c = []
@@ -77,32 +85,49 @@ const Collection = ({ category, mode }) => {
                     <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
                 </div>
             </div>
-            <Fade bottom>
-                <Carousel cols={4} rows={1} loop
-                    mobileBreakpoint={670}
-                    responsiveLayout={[
-                        {
-                            breakpoint: 1200,
-                            cols: 3
-                        },
-                        {
-                            breakpoint: 990,
-                            cols: 2
-                        }
-                    ]}>
-                    {product && product?.map((item, i) => {
-                        return (
-                            <Carousel.Item key={i} >
-                                <Link href={`/products/${item?.slug}`} className="  rounded overflow-hidden ">
-                                    <div className="w-full my-5 shadow-md bg-white max-w-xs transition duration-300 ease-in-out hover:scale-105 cursor-pointer" key={i}>
-                                        <img className="md:h-[35vh] w-full object-contain lg:h-[40vh] h-[50vh]" width="100%" src={item?.img} />
+            <Carousel cols={4} rows={1} loop
+                mobileBreakpoint={670}
+                responsiveLayout={[
+                    {
+                        breakpoint: 1200,
+                        cols: 3
+                    },
+                    {
+                        breakpoint: 990,
+                        cols: 2
+                    }
+                ]}>
+                {product && product?.map((item, i) => {
+                    return (
+                        <Carousel.Item key={i} >
+                            <Fade >
+                                <Link href={`/products/${item?.slug}`}
+                                    onMouseOver={() => { setModal(hover) }}
+                                    onMouseLeave={() => { setModal(nHover) }}
+                                    className="  rounded overflow-hidden  ">
+                                    <div
+                                        className="w-full my-5 shadow-md bg-white max-w-xs transition duration-300 ease-in-out  cursor-pointer" key={i}>
+                                        <div
+                                            className="md:h-[35vh] lg:h-[40vh] z-0 h-[50vh] hover:scale-105 transition duration-500 ease-in-out w-full">
+                                            <img className="object-contain md:h-[35vh] lg:h-[40vh] z-0 h-[50vh] hover:scale-105 transition duration-500 ease-in-out w-full" width="100%" src={item?.img} />
+                                            <Fade >
+                                                <span className={`${modal} transition duration-500 ease-in-out `}>
+                                                    <CiHeart className="hover:text-indigo-800 font-bold" />
+                                                    <IoCartOutline className="hover:text-indigo-800 font-bold" />
+                                                </span>
+                                            </Fade>
+                                        </div>
+                                        <span className="flex justify-center items-center text-sm flex-col py-5 text-black/70 font-semibold hover:text-black/80 transition duration-300 ease-in ">
+                                            <p className="px-2">{item?.title}</p>
+                                            <p className="px-2">₹{item?.price}</p>
+                                        </span>
                                     </div>
                                 </Link>
-                            </Carousel.Item>
-                        )
-                    })}
-                </Carousel>
-            </Fade>
+                            </Fade >
+                        </Carousel.Item>
+                    )
+                })}
+            </Carousel>
         </>
     )
 }

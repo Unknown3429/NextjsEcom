@@ -31,7 +31,7 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
 
     return (
         <>
-            <nav key={key1} className="text-gray-400 bg-gray-900 body-font sticky top-0 z-10 ">
+            <nav key={key1} className="text-gray-400 bg-gray-900 body-font sticky top-0 z-10 transition ease-in-out transform duration-300 ">
                 <div className="container mx-auto flex py-5 pl-5 justify-between flex-row items-center">
                     <Link href={"/"} className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                         {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
@@ -157,18 +157,19 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                     </div>
                 </div>
                 }
+                <div className='transition ease transform duration-300 '>
+                    {search ?
+                        <Fade top>
+                            <Searchbar className="transition ease-in-out transform duration-300" setSearch={setSearch} />
+                        </Fade>
+                        :
+                        ""}
+                </div>
             </nav >
 
 
             {/* Search bar  */}
-            <div className='transition ease transform duration-300 '>
-                {search ?
-                    <Fade top>
-                        <Searchbar className="transition ease-in-out transform duration-300 " setSearch={setSearch} />
-                    </Fade>
-                    :
-                    ""}
-            </div>
+
 
             {/* bottom navigation bar  */}
             < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-900 dark:border-gray-600" >

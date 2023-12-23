@@ -4,11 +4,15 @@ import Head from 'next/head';
 import Collection from '../components/Collection';
 import Products from '../components/Products';
 import Service from '../components/Services';
+import Testimonials from './testimonials';
+import { useEffect, useState } from 'react';
 // import Front from '../components/front';
 // import Services from '../components/services';
 
 
-export default function Home({ mode }) {
+export default function Home({ mode, image }) {
+
+
   return (
     <div >
       <Head>
@@ -30,7 +34,8 @@ export default function Home({ mode }) {
           </div>
 
           <div>
-            <Collection />
+            <Collection image={image} />
+
           </div>
 
           <div>
@@ -45,6 +50,9 @@ export default function Home({ mode }) {
             <Products category={"hoodies"} mode={mode} />
           </div>
 
+          <div>
+            <Testimonials />
+          </div>
 
           <div>
             <Service mode={mode} />

@@ -18,7 +18,7 @@ const Tshirts = ({ products, mode }) => {
           <div className="flex flex-wrap   justify-center">
             {Object.keys(products)?.map((item) => {
               const pureColor = products[item]?.color
-              return <Fade key={products[item]._id} bottom>
+              return <Fade key={products[item]._id} >
                 <div className=" lg:w-1/4 md:w-1/2 p-4 w-full shadow-md mb-10 max-w-xs transition duration-300 ease-in-out hover:scale-110">
 
                   <Link href={`/products/${products[item]?.slug}`} className="  rounded overflow-hidden ">

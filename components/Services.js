@@ -4,7 +4,7 @@ import Fade from 'react-reveal/Fade';
 const Service = ({ mode }) => {
     return (
         <div>
-            <Fade bottom>
+            <Fade >
                 <section className={mode ? "text-gray-300 body-font" : "text-gray-600 body-font"}>
                     <div className="container px-5 py-24 mx-auto">
                         <div className="text-center mb-20">
@@ -23,7 +23,7 @@ const Service = ({ mode }) => {
                                     </svg>
                                 </div>
                                 <div className="flex-grow">
-                                    <Fade bottom cascade>
+                                    <Fade >
                                         <h2 className={mode ? "text-[#e9e7ee] text-lg title-font font-medium mb-3" : "text-gray-900 text-lg title-font font-medium mb-3"}>Shooting Stars</h2>
                                         <p className="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
                                     </Fade>
@@ -38,7 +38,7 @@ const Service = ({ mode }) => {
                                     </svg>
                                 </div>
                                 <div className="flex-grow">
-                                    <Fade bottom cascade>
+                                    <Fade >
                                         <h2 className={mode ? "text-[#e9e7ee] text-lg title-font font-medium mb-3" : "text-gray-900 text-lg title-font font-medium mb-3"}>The Catalyzer</h2>
                                         <p className="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
                                     </Fade>
