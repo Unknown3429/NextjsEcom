@@ -5,10 +5,12 @@ import { CartProvider } from "../context/cartContext"
 
 import LoadingBar from 'react-top-loading-bar'
 // import { useCartContext } from '../../context/cartContext';
+import ReactLoading from 'react-loading';
 
 import "../styles/globals.css"
 import { useRouter } from "next/router"
 import { SkeletonTheme } from "react-loading-skeleton"
+import QuickView from "../components/QuickView"
 
 const MyApp = ({ Component, pageProps }) => {
     const router = useRouter()
@@ -20,13 +22,13 @@ const MyApp = ({ Component, pageProps }) => {
     const [image, setImage] = useState([])
 
     const handleimg = async () => {
-      const img = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/collection`);
-      let res = await img.json()
-      setImage(res)
+        const img = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/collection`);
+        let res = await img.json()
+        setImage(res)
     }
-  
+
     useEffect(() => {
-      handleimg()
+        handleimg()
     }, [])
 
     // for add item in cart 
@@ -122,7 +124,15 @@ const MyApp = ({ Component, pageProps }) => {
         }
     }, [router?.query,])
 
+    let img = image?.img
 
+    if (!img) {
+        return (
+            <div className="flex justify-center items-center min-h-screen opacity-90">
+                <ReactLoading type={"bars"} color={'#6366f1'} height={'10%'} width={'10%'} />
+            </div>
+        )
+    }
     return (
         <>
             <CartProvider>

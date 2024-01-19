@@ -4,18 +4,125 @@ import Fade from 'react-reveal/Fade';
 
 import Product from '../model/Product'
 import Head from 'next/head';
+import { CiFilter } from "react-icons/ci";
+import { useState } from 'react';
 
-const Hoodies = ({ products, mode }) => {
+
+const Hoodies = ({ products, mode, image }) => {
   // console.log(products);
+  const [minval, setMinval] = useState(0)
+  const [maxval, setMaxval] = useState(1000)
+  const [value, setValue] = useState(1000)
+  const [filter, setFilter] = useState(false)
+
+
+  const handleChangeVal = (e) => {
+    e.preventDefault()
+    setValue(e.target.value)
+    console.log(value);
+  }
   return (
     <div>
       <Head>
         <title>Wear The Comfort-Hoodies Collection</title>
       </Head>
       <section className={mode ? `text-gray-300 body-font min-h-screen bg-[#232D3F]` : `text-gray-600 body-font min-h-screen`}>
-        <div className="container px-5 py-16 mx-auto">
+        <div className="container px-5 py-10 mx-auto">
           <h2 className={mode ? 'text-center mb-10 text-2xl text-[#e9e7ee]' : "text-center mb-10 text-2xl text-black"}>Hoodies-collection</h2>
-          <div className="flex flex-wrap  justify-center">
+          <div className='md:w-[70vw] w-[90vw] md:hidden grid-cols-2 grid gap-2 h-[5vh]'>
+            <div className='hidden md:flex'>Tshirt</div>
+            <div className='text-center'> {Object.values(products)?.length} Product Available</div>
+            <div className='text-right md:mr-8'>
+              <select name="cars" id="cars" className='hidden md:block'>
+                <option value="Price(Lowest)">Price(Lowest)</option>
+                <option value="Price(Highest)">Price(Highest)</option>
+              </select>
+              <div className='w-full m-auto flex justify-end items-center mr-3'>
+                <CiFilter onClick={() => { setFilter(!filter) }} className='text-3xl font-bold' />
+              </div>
+            </div>
+          </div>
+          <div className='flex md:flex-row flex-col w-[95vw]'>
+            {/* filter  */}
+            <div className={filter ? `md:w-[25vw] w-[90vw] flex flex-col gap-8 ml-5 md:ml-0 mb-5 md:mb-0` : "mb-5 md:mb-0 hidden md:w-[25vw] w-[90vw] ml-5 md:ml-0 md:flex flex-col gap-8 "}>
+              {/* category */}
+              <div className='w-36'>
+                <h2 className='text-xl text-black/80 font-semibold my-2'>Category</h2>
+                <div className=' flex flex-col gap-3 mt-5'>
+                  {image.img?.map((cat, i) => {
+                    return (<p key={i} className='hover:underline cursor-pointer transition-all duration-300 text-base hover:translate-x-1 hover:text-indigo-600 text-black/70 font-medium '>{cat.category.toUpperCase()}</p>)
+                  })}
+                </div>
+              </div>
+
+              {/* priceFilter  */}
+              <div>
+                <h2 className='text-xl text-black/80 font-semibold my-2'>Price</h2>
+                <div className="flex flex-col w-36 gap-3">
+                  <span>₹{(Math.round(value * 100) / 100).toFixed(2)}</span>
+                  <input
+                    type="range"
+                    min={minval}
+                    max={maxval}
+                    value={value}
+                    onChange={handleChangeVal}
+                    classname={``}
+                  />
+                </div>
+              </div>
+
+
+              {/* clear filter  */}
+              <div>
+                <button className="lg:mt-8 xl:mt-0 flex-shrink-0 inline-flex text-white bg-red-500 border-0 py-4 px-6 focus:outline-none hover:bg-red-400 rounded">CLEAR FILTER</button>
+              </div>
+            </div>
+
+            {/* products */}
+            <div>
+
+              <div className='md:w-[70vw] grid-cols-2 lg:grid-cols-3 grid gap-2 mx-5'>
+                {Object.keys(products)?.map((item, i) => {
+                  return <div key={i}>
+                    <div className='lg:w-[20vw] pb-5 shadow-md rounded-sm'>
+                      {/* image  */}
+                      <div>
+                        <Link href={`/products/${products[item]?.slug}`}>
+                          <img src={products[item]?.img} className='rounded-sm w-full object-contain' alt="" />
+                        </Link>
+                      </div>
+                      {/* text  */}
+                      <Link href={`/products/${products[item]?.slug}`}>
+                        <div className='md:ml-6 my-3 md:items-start flex flex-col items-center'>
+                          <p>{products[item]?.category}</p>
+                          {/* heading */}
+                          <div className='md:text-xl font-semibold text-black/80' >
+                            <h2>{products[item]?.title.slice(0, 20)}</h2>
+                          </div>
+                          {/* Price */}
+                          <div className='text-black/80 flex gap-4' >
+                            <p className='text-black/40'><s>₹{products[item]?.price + 299}</s></p>
+                            <h2>₹{products[item]?.price}</h2>
+                          </div>
+                          {/* size  */}
+                          <div className='flex mt-2 flex-wrap'>
+                            {products[item].size.map((size, i) => {
+                              return <div key={i}>
+                                <span className='border border-gray-300 px-1  mx-1'>{size}</span>
+                              </div>
+                            })}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                })}
+
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="flex flex-wrap  justify-center">
             {Object.keys(products)?.map((item) => {
               const pureColor = products[item]?.color
               return <Fade key={products[item]._id} >
@@ -54,7 +161,7 @@ const Hoodies = ({ products, mode }) => {
               </Fade>
             })}
 
-          </div>
+          </div> */}
         </div>
       </section>
     </div>

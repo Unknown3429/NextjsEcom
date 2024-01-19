@@ -115,7 +115,7 @@ const cart = ({ mode }) => {
 
       {/* order Total  */}
       <div className="order-total--amount my-10">
-        <div className="mx-5 order-total--subdata p-5 w-[35vw] bg-gray-200">
+        <div className="mx-5 order-total--subdata p-5  bg-gray-200">
           <div>
             <p>SubTotal:</p>
             <p>₹500</p>
@@ -233,7 +233,6 @@ const cart = ({ mode }) => {
            justify-content: center;
            align-items: center;
            gap: 1.2rem;
-           font-size: 1rem;
        
            button {
              border: none;
@@ -242,7 +241,6 @@ const cart = ({ mode }) => {
            }
        
            .amount-style {
-             font-size: 2.4rem;
              color:  => theme.colors.btn};
          }
          }

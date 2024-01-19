@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Searchbar from './Searchbar';
 import Fade from 'react-reveal/Fade';
+import Animate from './Animate';
 
 
 
@@ -74,20 +75,20 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                         <Link href={"/caps"} className="mr-5 hover:text-white">Caps</Link>
                     </nav>
 
-                    <button onClick={() => {
+                    {/* <button onClick={() => {
                         setMode(!mode)
                     }}
                         className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0">
                         <BsMoonStarsFill className='hover:text-white' />
-                    </button>
+                    </button> */}
 
                     {/* {serach} */}
-                    <button onClick={() => {
+                    {/* <button onClick={() => {
                         setSearch(!search)
                     }}
                         className="hidden mr-3 md:inline-flex items-center border-0 py-1 pl-3 focus:outline-none  rounded text-3xl mt-4 md:mt-0">
                         <BsSearch className='hover:text-white' />
-                    </button>
+                    </button> */}
 
 
                     {user?.value &&
@@ -157,14 +158,14 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                     </div>
                 </div>
                 }
-                <div className='transition ease transform duration-300 '>
+                {/* <div className='transition ease transform duration-300 '>
                     {search ?
-                        <Fade top>
+                        <Animate >
                             <Searchbar className="transition ease-in-out transform duration-300" setSearch={setSearch} />
-                        </Fade>
+                        </Animate>
                         :
                         ""}
-                </div>
+                </div> */}
             </nav >
 
 
@@ -172,8 +173,8 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
 
 
             {/* bottom navigation bar  */}
-            < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-900 dark:border-gray-600" >
-                <div className="grid h-full grid-cols-5 mx-auto">
+            < div className="fixed md:hidden z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-900 dark:border-gray-600 text-2xl" >
+                <div className="grid h-full grid-cols-3 mx-auto">
                     <button data-tooltip-target="tooltip-home" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <Link href={"/"}>
                             <svg className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -186,13 +187,13 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                         Home
                         <div className="tooltip-arrow" data-popper-arrow></div>
                     </div>
-                    <button data-tooltip-target="tooltip-wallet" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                    {/* <button data-tooltip-target="tooltip-wallet" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <BsMoonStarsFill onClick={() => {
                             setMode(!mode)
                         }}
                             className='w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500' />
                         <span className="sr-only">mode</span>
-                    </button>
+                    </button> */}
                     <div id="tooltip-wallet" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         mode
                         <div className="tooltip-arrow" data-popper-arrow></div>
@@ -206,12 +207,12 @@ const Navbar = ({ key1, logout, user, setMode, mode }) => {
                     </button>
 
 
-                    <button onClick={() => {
+                    {/* <button onClick={() => {
                         setSearch(!search)
                     }} data-tooltip-target="tooltip-settings" type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <FaMagnifyingGlass className='w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500' />
                         <span className="sr-only">Search</span>
-                    </button>
+                    </button> */}
                     <div id="tooltip-settings" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         Settings
                         <div className="tooltip-arrow" data-popper-arrow></div>

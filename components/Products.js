@@ -7,15 +7,16 @@ import Link from 'next/link'
 
 import { CiHeart } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
+import { LuEye } from "react-icons/lu";
+import QuickView from "./QuickView";
+import Animate from "./Animate";
 
 
 const Collection = ({ category, mode }) => {
 
     const [product, setProduct] = useState([])
-
-    const hover = "flex shadow-md relative rounded-sm justify-around py-2 text-2xl z-50 mx-auto -mt-12 bg-white w-52"
-    const nHover = "hidden shadow-md relative rounded-sm justify-around py-2 text-2xl z-50 mx-auto -mt-12 bg-white w-52"
-    const [modal, setModal] = useState(nHover)
+    const [modal, setModal] = useState(false
+    )
 
     const [sk, setSk] = useState(false)
     let p = []
@@ -79,12 +80,13 @@ const Collection = ({ category, mode }) => {
 
     return (
         <>
-            <div className="text-center my-10">
-                <h1 className={mode ? `sm:text-3xl text-2xl font-medium title-font text-[#e9e7ee] mb-2` : "sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-2"}>{category.toUpperCase()}</h1>
-                <div className="flex mt-6 justify-center">
-                    <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
+            <div class="text-center my-10">
+                <h1 class={mode ? `sm:text-4xl text-2xl font-bold title-font text-[#e9e7ee]  mb-2` : `sm:text-4xl text-2xl font-bold title-font text-gray-900 mb-2`}>{category.toUpperCase()}</h1>
+                <div class="flex mt-3 justify-center">
+                    <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
                 </div>
             </div>
+
             <Carousel cols={4} rows={1} loop
                 mobileBreakpoint={670}
                 responsiveLayout={[
@@ -101,33 +103,45 @@ const Collection = ({ category, mode }) => {
                     return (
                         <Carousel.Item key={i} >
                             <Fade >
-                                <Link href={`/products/${item?.slug}`}
-                                    onMouseOver={() => { setModal(hover) }}
-                                    onMouseLeave={() => { setModal(nHover) }}
+                                <div
                                     className="  rounded overflow-hidden  ">
                                     <div
-                                        className="w-full my-5 shadow-md bg-white max-w-xs transition duration-300 ease-in-out  cursor-pointer" key={i}>
+                                        className="w-full my-5 shadow-md bg-white max-w-xs transition duration-300 ease-in-out  cursor-pointer group">
                                         <div
                                             className="md:h-[35vh] lg:h-[40vh] z-0 h-[50vh] hover:scale-105 transition duration-500 ease-in-out w-full">
-                                            <img className="object-contain md:h-[35vh] lg:h-[40vh] z-0 h-[50vh] hover:scale-105 transition duration-500 ease-in-out w-full" width="100%" src={item?.img} />
+                                            <Link href={`/products/${item?.slug}`}>
+                                                <img className="object-contain md:h-[35vh] lg:h-[40vh] z-0 h-[50vh] hover:scale-105 transition duration-500 ease-in-out w-full" width="100%" src={item?.img} />
+                                            </Link>
+
                                             <Fade >
-                                                <span className={`${modal} transition duration-500 ease-in-out `}>
+                                                <span className={`md:group-hover:flex md:hidden flex shadow-md relative rounded-sm justify-around py-2 text-2xl z-50 mx-auto -mt-12 bg-white w-52 transition duration-500 ease-in-out `}>
                                                     <CiHeart className="hover:text-indigo-800 font-bold" />
+                                                    <LuEye onClick={() => {
+                                                        setModal(item)
+                                                    }} className="hover:text-indigo-800 font-bold hidden md:flex" />
                                                     <IoCartOutline className="hover:text-indigo-800 font-bold" />
+
                                                 </span>
                                             </Fade>
                                         </div>
-                                        <span className="flex justify-center items-center text-sm flex-col py-5 text-black/70 font-semibold hover:text-black/80 transition duration-300 ease-in ">
-                                            <p className="px-2">{item?.title}</p>
-                                            <p className="px-2">₹{item?.price}</p>
-                                        </span>
+                                        <Link href={`/products/${item?.slug}`}>
+                                            <span className="flex justify-center items-center text-sm flex-col py-5 text-black/70 font-semibold hover:text-black/80 transition duration-300 ease-in ">
+                                                <p className="px-2">{item?.title}</p>
+                                                <p className="px-2">₹{item?.price}</p>
+                                            </span>
+                                        </Link>
                                     </div>
-                                </Link>
+                                </div>
                             </Fade >
                         </Carousel.Item>
                     )
                 })}
             </Carousel>
+            {modal &&
+
+                <div className="">
+                    <QuickView product={modal} setModal={setModal} />
+                </div>}
         </>
     )
 }

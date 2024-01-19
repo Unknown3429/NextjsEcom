@@ -9,24 +9,28 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import Animate from './Animate';
 
 
 function Slider({ mode }) {
 
   const slides = [
-    'https://m.media-amazon.com/images/I/7114uGhcy0L._UX679_.jpg',
-    ,
-    'https://m.media-amazon.com/images/I/714V5wkV8oL._UY741_.jpg',
-    ,
-    'https://m.media-amazon.com/images/I/81+3g00XzmL._UY741_.jpg',
-    ,
-    'https://m.media-amazon.com/images/I/61GNclNEM8L._UY741_.jpg',
-    ,
-    'https://m.media-amazon.com/images/I/717KGNNVDfL._UX425_.jpg'
-    ,
-    'https://m.media-amazon.com/images/I/81m1eXdqtpL._UX679_.jpg'
-    ,
-    'https://m.media-amazon.com/images/I/514vCNWtZDL._UX569_.jpg'
+    '/slide1.png',
+    '/slide2.png',
+    '/slide3.png',
+    '/slide4.png',
+    '/slide5.png',
+    // 'https://m.media-amazon.com/images/I/714V5wkV8oL._UY741_.jpg',
+    // ,
+    // 'https://m.media-amazon.com/images/I/81+3g00XzmL._UY741_.jpg',
+    // ,
+    // 'https://m.media-amazon.com/images/I/61GNclNEM8L._UY741_.jpg',
+    // ,
+    // 'https://m.media-amazon.com/images/I/717KGNNVDfL._UX425_.jpg'
+    // ,
+    // 'https://m.media-amazon.com/images/I/81m1eXdqtpL._UX679_.jpg'
+    // ,
+    // 'https://m.media-amazon.com/images/I/514vCNWtZDL._UX569_.jpg'
   ];
   // console.log(slides);
 
@@ -43,18 +47,17 @@ function Slider({ mode }) {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
         rewind={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
       >
-        {slides?.map((src) => {
-          return <SwiperSlide className={mode ? 'bg-[#232D3F]' : ""} key={src}>
-            <Fade>
-              <img className='object-cover h-[45vh] m-auto mb-10' src={src} />
-            </Fade>
-          </SwiperSlide>
-        })}
+        <Animate>
+          {slides?.map((src) => {
+            return <SwiperSlide className={mode ? 'bg-[#232D3F]' : ""} key={src}>
+              <img className='object-fill  lg:h-[70vh] w-[100vw] md:h-[50vh] h-[30vh] m-auto mb-10' src={src} />
+            </SwiperSlide>
+          })}
+        </Animate>
       </Swiper>
     </>
   );
